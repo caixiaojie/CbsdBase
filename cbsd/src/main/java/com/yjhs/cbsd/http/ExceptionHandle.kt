@@ -1,4 +1,4 @@
-package com.lai.comicmtc_v2.http
+package com.yjhs.cbsd.http
 
 import android.text.TextUtils
 import retrofit2.HttpException

@@ -1,8 +1,9 @@
-package com.lai.comicmtc_v2.http
+package com.yjhs.cbsdbase
 
 import com.yjhs.cbsd.App
 import com.yjhs.cbsd.BuildConfig
 import com.yjhs.cbsd.utils.NetWorkUtils
+import com.yjhs.cbsd.utils.Preference
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -23,9 +24,11 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    val service by lazy { getService(ComicService::class.java, ComicService.BASE_URL) }
+    val service by lazy { getService(ApiService::class.java, ApiService.BASE_URL) }
 
 //    private val cookieJar by lazy { PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(App.CONTEXT)) }
+    //是否是横向阅读模式
+    private var session_id by Preference(Preference.session_id, "")
 
     private val client: OkHttpClient
         get() {
@@ -46,6 +49,7 @@ object RetrofitClient {
 //                .cookieJar(cookieJar)
                 .addInterceptor { chain ->
                     var request = chain.request()
+                    request = request.newBuilder().addHeader("session_id", session_id).build()
                     if (!NetWorkUtils.isNetworkAvailable(App.CONTEXT)) {
                         request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
