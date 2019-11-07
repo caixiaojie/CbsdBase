@@ -59,7 +59,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
             if (response.code == 1) {
                 success.invoke(response.data)
             } else {
-                if (response.data != null && !TextUtils.isEmpty(response.msg)) {
+                if (response.data == null && !TextUtils.isEmpty(response.msg)) {
                     mException.value = Throwable(response.msg)
                 } else {
                     mException.value = Throwable("未知异常")
