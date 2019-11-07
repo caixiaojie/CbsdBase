@@ -29,8 +29,10 @@ class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemChildClickListener
         mViewModel.queryData(map)
     }
 
-    override fun hideLoading() {
-        super.hideLoading()
+    override fun onError(throwable: Throwable) {
+        sr_layout.finishRefresh()
+        sr_layout.finishLoadMore()
+        hideLoading()
     }
 
 
