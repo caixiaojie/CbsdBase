@@ -16,6 +16,7 @@ import java.util.HashMap
 interface ApiService {
     companion object {
         const val BASE_URL = "http://api.cheyuanxiang.com:8080/share_ad_api_test/"
+        const val ROOT_PATH = "http://api.cheyuanxiang.com:88/picpath/share_ad/"
     }
 
     //登录

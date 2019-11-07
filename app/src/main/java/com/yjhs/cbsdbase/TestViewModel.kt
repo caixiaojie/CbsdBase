@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
  */
 class TestViewModel : BaseViewModel() {
 
-    val infoBean = MutableLiveData<List<CommonListResp.InforModelBean>>()
+    val infoBean = MutableLiveData<List<InforModel>>()
 
 
 

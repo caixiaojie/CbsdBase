@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
  * @Author zhengwei
  * @Date 2015-1-23
  */
-public class ResultVO<T extends JsonElement> {
+public class ResultVO<T> {
 
 	private int code;
 	private String msg;

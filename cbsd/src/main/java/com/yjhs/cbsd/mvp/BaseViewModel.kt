@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonElement
-import com.lai.comicmtc_v2.http.ExceptionHandle
 import com.yjhs.cbsd.enty.CBSDResultEntity
 import com.yjhs.cbsd.enty.ResultVO
+import com.yjhs.cbsd.http.ExceptionHandle
 import kotlinx.coroutines.*
 
 /**
@@ -28,7 +28,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     /**
      * 用来包裹协程的错误信息
      */
-    private suspend fun <T : JsonElement?> tryCatch(tryBlock: suspend CoroutineScope.() -> ResultVO<T>): ResultVO<T> {
+    private suspend fun <T> tryCatch(tryBlock: suspend CoroutineScope.() -> ResultVO<T>): ResultVO<T> {
         return coroutineScope {
             try {
                 return@coroutineScope tryBlock()
@@ -47,7 +47,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     }
 
 
-     private fun <T : JsonElement?> runOnIo(
+     private fun <T> runOnIo(
         request: suspend CoroutineScope.() -> ResultVO<T>,
         success: ((info: T) -> Unit),
         error: ((info: ResultVO<T>) -> Unit)
@@ -70,7 +70,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     }
 
 
-    fun <T : JsonElement?> request(
+    fun <T> request(
         request: suspend CoroutineScope.() -> ResultVO<T>,
         success: ((info: T) -> Unit)
     ) {

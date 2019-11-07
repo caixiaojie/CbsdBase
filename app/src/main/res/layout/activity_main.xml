@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/common_preview_title"/>
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_weight="1"
