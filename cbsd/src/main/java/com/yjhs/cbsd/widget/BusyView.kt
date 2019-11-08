@@ -22,7 +22,7 @@ import android.animation.ValueAnimator
  *
  */
 class BusyView(context: Context) : BaseDialog(context, R.style.LoadingDialogStyle) {
-    private val dotText = arrayOf(" .", " .. ", " ...")
+    private val dotText = arrayOf(".", "..", "...")
     private var valueAnimator: ValueAnimator? = null
     private val loadingTxt = "加载中"
 
@@ -37,7 +37,7 @@ class BusyView(context: Context) : BaseDialog(context, R.style.LoadingDialogStyl
             valueAnimator?.repeatCount = ValueAnimator.INFINITE
             valueAnimator?.addUpdateListener { animation ->
                 val i = animation.animatedValue as Int
-                message.text = loadingTxt + dotText[i % dotText.size]
+                txt_dot.text = dotText[i % dotText.size]
             }
         }
         valueAnimator?.start()
