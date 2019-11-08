@@ -1,4 +1,4 @@
-package com.lai.comicmtc_v2.ui.widget.dialog
+package com.yjhs.cbsd.widget.dialog
 
 import android.content.Context
 import android.view.View

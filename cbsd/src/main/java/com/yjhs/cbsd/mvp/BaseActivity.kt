@@ -7,8 +7,8 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.gyf.immersionbar.ImmersionBar
-import com.lai.comicmtc_v2.ui.widget.dialog.LoadingDialog
 import com.yjhs.cbsd.R
+import com.yjhs.cbsd.ui.widget.dialog.BusyView
 import me.yokeyword.fragmentation.SupportActivity
 
 
@@ -22,7 +22,7 @@ import me.yokeyword.fragmentation.SupportActivity
  */
 abstract class BaseActivity : SupportActivity(), IBaseView {
 
-    private var mLoadingDialog: LoadingDialog? = null
+    private var mLoadingDialog: BusyView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +97,7 @@ abstract class BaseActivity : SupportActivity(), IBaseView {
             return
         }
         if (mLoadingDialog == null) {
-            mLoadingDialog = LoadingDialog(this)
+            mLoadingDialog = BusyView(this)
         }
         if (!mLoadingDialog!!.isShowing) {
             mLoadingDialog!!.show()

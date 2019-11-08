@@ -66,7 +66,7 @@ class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemClickListener, OnR
         mViewModel.infoBean.observe(this, Observer {
             sr_layout.finishRefresh()
             sr_layout.finishLoadMore()
-            hideLoading()
+//            hideLoading()
             if (mCurrPager == 1){
                 mList.clear()
             }

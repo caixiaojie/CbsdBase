@@ -21,7 +21,7 @@ abstract class BaseVMActivity : BaseActivity() {
     inline fun <reified VM : BaseViewModel> createViewModel(): VM {
         val mViewModel = ViewModelProvider(this)[VM::class.java]
         mViewModel.mException.observe(this, Observer {
-            hideLoading()
+//            hideLoading()
             onError(it)
             toastMessage(it)
         })

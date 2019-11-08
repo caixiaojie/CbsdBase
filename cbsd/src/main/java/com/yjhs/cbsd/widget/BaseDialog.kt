@@ -1,4 +1,4 @@
-package com.lai.comicmtc_v2.ui.widget.dialog
+package com.yjhs.cbsd.widget.dialog
 
 import android.content.Context
 import android.os.Bundle
@@ -63,11 +63,12 @@ abstract class BaseDialog(context: Context,theme: Int = R.style.Theme_AppCompat_
         val dialogWindow = this.window
         dialogWindow!!.setBackgroundDrawableResource(android.R.color.transparent)//设置透明
         val lp = dialogWindow.attributes
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         lp.gravity = Gravity.CENTER
         lp.y = getDistanceY()
         dialogWindow.attributes = lp
+        dialogWindow.setWindowAnimations(R.style.PopWindowAnimStyle);
     }
 
     fun showDialog() {
