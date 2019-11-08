@@ -17,6 +17,8 @@ class Preference<T>(val name: String, private val default: T) : ReadWritePropert
         const val IS_FLOWSYSTEM = "isFlowSystem"
         const val BRIGHTNESS = "brightness"
         const val session_id = "session_id"
+        const val strImgRootPath = "strImgRootPath"
+        const val strUserType = "strUserType"
         //是否是夜间模式
         const val NIGHT_BRIGHTNESS_MODEL = "NIGHT_BRIGHTNESS"
     }

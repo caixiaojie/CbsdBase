@@ -1,4 +1,4 @@
-package com.yjhs.cbsdbase
+package com.yjhs.cbsdbase.bean
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.yjhs.cbsd.utils.Tools

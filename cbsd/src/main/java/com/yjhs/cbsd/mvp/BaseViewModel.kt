@@ -1,14 +1,17 @@
 package com.yjhs.cbsd.mvp
 
+import android.content.Intent
 import android.text.TextUtils
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonElement
+import com.yjhs.cbsd.App
 import com.yjhs.cbsd.enty.CBSDResultEntity
 import com.yjhs.cbsd.enty.ResultVO
 import com.yjhs.cbsd.http.ExceptionHandle
+import com.yjhs.cbsd.utils.ActivityUtil
 import kotlinx.coroutines.*
 
 /**
@@ -59,10 +62,20 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
             if (response.code == 1) {
                 success.invoke(response.data)
             } else {
-                if (response.data == null && !TextUtils.isEmpty(response.msg)) {
-                    mException.value = Throwable(response.msg)
-                } else {
-                    mException.value = Throwable("未知异常")
+                if (response.code == -1){
+                    //登录已过期  或 用户未登录
+                    mException.value = Throwable("登录已过期,请重新登录")
+                    val currentActivity = ActivityUtil.getCurrentActivity()
+                    if (currentActivity != null) {
+                        val intent = Intent(currentActivity, Class.forName("com.yjhs.cbsdbase.LoginActivity"))
+                        currentActivity.startActivity(intent)
+                    }
+                }else{
+                    if (response.data == null && !TextUtils.isEmpty(response.msg)) {
+                        mException.value = Throwable(response.msg)
+                    } else {
+                        mException.value = Throwable("未知异常")
+                    }
                 }
                 error.invoke(response)
             }

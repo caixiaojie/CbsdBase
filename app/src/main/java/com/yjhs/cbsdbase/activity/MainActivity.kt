@@ -1,9 +1,8 @@
-package com.yjhs.cbsdbase
+package com.yjhs.cbsdbase.activity
 
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,10 +12,24 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.yjhs.cbsd.mvp.BaseVMActivity
+import com.yjhs.cbsd.utils.Tools
+import com.yjhs.cbsdbase.adapter.HomeAdapter
+import com.yjhs.cbsdbase.R
+import com.yjhs.cbsdbase.bean.InforModel
+import com.yjhs.cbsdbase.model.TestViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
-class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemChildClickListener, OnRefreshListener,
+class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemClickListener, OnRefreshListener,
     OnLoadMoreListener {
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        val model = mList.get(position)
+        startActivity<DetailActivity>(Pair("strinforid",model.strinforid),Pair("strUserinfoid",model.struserinfoid),
+            Pair("strUrl",model.strUrl), Pair("isAd",false),Pair("isUrl", Tools.safeString(model.isUrl) == "1"),Pair("strBrandId",model.strbrandid)
+            ,Pair("strCarModelId",model.strcarmodelid),Pair("strCarSpecId",model.strcarspecid)
+        )
+    }
+
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         mCurrPager++
         map.put("pageNumber",mCurrPager)
@@ -36,10 +49,6 @@ class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemChildClickListener
     }
 
 
-    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-
-    }
-
     override fun getLayout(): Int {
         return R.layout.activity_main
     }
@@ -51,6 +60,7 @@ class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemChildClickListener
 
         rv.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rv.adapter = adapter
+        adapter.onItemClickListener = this
 
 
         mViewModel.infoBean.observe(this, Observer {

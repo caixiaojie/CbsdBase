@@ -25,9 +25,6 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
 
     val service by lazy { getService(ApiService::class.java, ApiService.BASE_URL) }
-
-//    private val cookieJar by lazy { PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(App.CONTEXT)) }
-    //是否是横向阅读模式
     private var session_id by Preference(Preference.session_id, "")
 
     private val client: OkHttpClient
@@ -81,8 +78,6 @@ object RetrofitClient {
         return Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
             .baseUrl(baseUrl)
             .build().create(serviceClass)
     }

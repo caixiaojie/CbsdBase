@@ -1,4 +1,4 @@
-package com.yjhs.cbsdbase;
+package com.yjhs.cbsdbase.bean;
 
 import com.google.gson.JsonElement;
 
@@ -8,7 +8,7 @@ import com.google.gson.JsonElement;
  * Desctiption:
  */
 
-public class LoginResp extends JsonElement {
+public class LoginResp {
     private String session_id;
     private UserinfoBean userinfo;
     private String strImgRootPath;
@@ -37,10 +37,7 @@ public class LoginResp extends JsonElement {
         this.strImgRootPath = strImgRootPath;
     }
 
-    @Override
-    public JsonElement deepCopy() {
-        return null;
-    }
+
 
     public static class UserinfoBean {
         /**

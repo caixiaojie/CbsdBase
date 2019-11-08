@@ -1,11 +1,9 @@
-package com.yjhs.cbsdbase
+package com.yjhs.cbsdbase.model
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.yjhs.cbsd.mvp.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.yjhs.cbsdbase.bean.InforModel
+import com.yjhs.cbsdbase.RetrofitClient
 
 /**
  *
