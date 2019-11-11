@@ -7,18 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
-
-
-    <com.scwang.smart.refresh.layout.SmartRefreshLayout
-            android:layout_weight="1"
-            android:id="@+id/sr_layout"
+    <FrameLayout
+            android:id="@+id/fl_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
-    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

@@ -1,14 +1,19 @@
 package com.yjhs.cbsd.mvp
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.gyf.immersionbar.ImmersionBar
 import com.yjhs.cbsd.R
 import com.yjhs.cbsd.ui.widget.dialog.BusyView
+import com.yjhs.cbsd.widget.MultipleStatusView
+import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportActivity
 
 
@@ -23,6 +28,7 @@ import me.yokeyword.fragmentation.SupportActivity
 abstract class BaseActivity : SupportActivity(), IBaseView {
 
     private var mLoadingDialog: BusyView? = null
+    private var mMultipleStatusView: MultipleStatusView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +36,10 @@ abstract class BaseActivity : SupportActivity(), IBaseView {
         setContentView(getLayout())
         initStatusBar()
         init(savedInstanceState)
-
-        /*Looper.myQueue().addIdleHandler {
-            false
-        }*/
+        initData()
+        initView()
+        start()
+        initListener()
     }
 
 
@@ -43,9 +49,31 @@ abstract class BaseActivity : SupportActivity(), IBaseView {
         }
         return null
     }
-
+    /**
+     *  加载布局
+     */
     @LayoutRes
     abstract fun getLayout(): Int
+
+    /**
+     * 初始化数据
+     */
+    abstract fun initData()
+
+    /**
+     * 初始化 View
+     */
+    abstract fun initView()
+
+    /**
+     * 开始请求
+     */
+    abstract fun start()
+
+    private fun initListener() {
+        mMultipleStatusView?.setOnClickListener(mRetryClickListener)
+        mMultipleStatusView?.setOnViewStatusChangeListener(mViewStatusChangeListener)
+    }
 
     abstract fun init(savedInstanceState: Bundle?)
 
@@ -54,50 +82,23 @@ abstract class BaseActivity : SupportActivity(), IBaseView {
                 .flymeOSStatusBarFontColor(R.color.black)  //修改flyme OS状态栏字体颜色
                 .statusBarDarkFont(true)
                 .transparentStatusBar()
+                .titleBar(toolbar)
                 .keyboardEnable(true).init()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-//        ImmersionBar.with(this).
-    }
-
-
-    fun setToolBar(
-            toolBar: androidx.appcompat.widget.Toolbar,
-            title: String?,
-            needBackButton: Boolean = true
-    ) {
-        setSupportActionBar(toolBar)
-        val supportActionBar = supportActionBar
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(needBackButton)
-            supportActionBar.setDisplayShowHomeEnabled(needBackButton)
-            supportActionBar.title = ""
-        }
-        val tvTitle = toolBar.findViewById<TextView>(R.id.ac_title)
-        tvTitle?.text = title
-
-        if (needBackButton) {
-            toolBar.setNavigationOnClickListener {
-                finish()
-            }
-        }
-    }
-
-
-    fun setToolBarTitle(toolBar: androidx.appcompat.widget.Toolbar, title: String?){
-        val tvTitle = toolBar.findViewById<TextView>(R.id.ac_title)
+    open fun setToolBarTitle(toolBar: androidx.appcompat.widget.Toolbar, title: String?){
+        val tvTitle = toolBar.findViewById<TextView>(R.id.title)
         tvTitle?.text = title
     }
 
 
-    override fun showLoading() {
+    override fun showLoading(msg: String) {
         if (this.isFinishing || this.isDestroyed) {
             return
         }
         if (mLoadingDialog == null) {
             mLoadingDialog = BusyView(this)
+            mLoadingDialog?.loadingTxt = msg
         }
         if (!mLoadingDialog!!.isShowing) {
             mLoadingDialog!!.show()
@@ -120,7 +121,27 @@ abstract class BaseActivity : SupportActivity(), IBaseView {
     }
 
     fun toast(str: String) {
-        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
     }
+
+    private val mRetryClickListener: View.OnClickListener = View.OnClickListener {
+//        Toast.makeText(applicationContext, "您点击了重试视图", Toast.LENGTH_SHORT).show()
+//        loading()
+        start()
+    }
+
+    private val mViewStatusChangeListener: MultipleStatusView.OnViewStatusChangeListener =
+        MultipleStatusView.OnViewStatusChangeListener { oldViewStatus, newViewStatus ->
+            /**
+             * 视图状态改变时回调
+             *
+             * @param oldViewStatus 之前的视图状态
+             * @param newViewStatus 新的视图状态
+             */
+            Log.d(
+                "MultipleStatusView", "oldViewStatus=" + oldViewStatus
+                        + ", newViewStatus=" + newViewStatus
+            )
+        }
 
 }

@@ -7,25 +7,32 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ac_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dist_50"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:visibility="invisible"
-        app:contentInsetStartWithNavigation="@dimen/dist_1"
-        app:navigationIcon="@drawable/ic_action_back">
+        app:contentInsetStart="0dp">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+            <ImageView android:layout_width="@dimen/dist_50"
+                       android:id="@+id/img_back"
+                       android:scaleType="center"
+                       android:src="@drawable/ic_arrow_back_black_24dp"
+                       android:layout_height="match_parent"/>
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dist_50"
+                    android:gravity="center_vertical"
+                    android:text="@string/app_name"
+                    android:textColor="@color/color7979"
+                    android:textSize="@dimen/textSize_16"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"
+                    tools:text="@string/app_name" />
 
-        <TextView
-            android:id="@+id/ac_title"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dist_48"
-            android:gravity="center_vertical"
-            android:text="@string/app_name"
-            android:textColor="@color/color7979"
-            android:textSize="@dimen/textSize_16"
-            android:textStyle="bold"
-            tools:text="@string/app_name" />
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 </merge>

@@ -17,9 +17,19 @@ import org.jetbrains.anko.startActivity
  * desc:
  */
 class LoginActivity : BaseVMActivity(), View.OnClickListener {
+    override fun initData() {
+    }
+
+    override fun initView() {
+    }
+
+    override fun start() {
+    }
+
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.txt_login ->{
+                showLoading("登录中")
                 mViewModel.login(Tools.safeString(et_account),Tools.safeString(et_pwd))
             }
         }
@@ -36,6 +46,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
 
     override fun init(savedInstanceState: Bundle?) {
         mViewModel.data.observe(this, Observer {
+            hideLoading()
             session_id = it.session_id
             strImgRootPath = it.strImgRootPath
             val userinfo = it.userinfo
@@ -46,5 +57,9 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         })
 
         txt_login.setOnClickListener(this)
+    }
+
+    override fun onError(throwable: Throwable) {
+        hideLoading()
     }
 }

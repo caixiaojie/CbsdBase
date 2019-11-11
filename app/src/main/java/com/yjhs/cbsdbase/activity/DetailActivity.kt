@@ -1,5 +1,6 @@
 package com.yjhs.cbsdbase.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -21,6 +22,15 @@ import kotlinx.android.synthetic.main.activity_detail.*
  * desc:
  */
 class DetailActivity : BaseVMActivity() {
+    override fun initData() {
+    }
+
+    override fun initView() {
+    }
+
+    override fun start() {
+    }
+
     private var strBrandId = ""
     private var strCarModelId = ""
     private var strCarSpecId = ""
@@ -71,26 +81,21 @@ class DetailActivity : BaseVMActivity() {
         mViewModel.priceList(Tools.objectToMap(mPriceReq))
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWeb(){
 
         val webSetting = webView.settings
-        webSetting.setJavaScriptEnabled(true)
+        webSetting.javaScriptEnabled = true
         webSetting.javaScriptCanOpenWindowsAutomatically = true
-        webSetting.setAllowFileAccess(true)
-        webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS)
+        webSetting.allowFileAccess = true
         webSetting.setSupportZoom(true)
-        webSetting.setBuiltInZoomControls(true)
-        webSetting.setUseWideViewPort(true)
-//		webSetting.setMediaPlaybackRequiresUserGesture(false);
+        webSetting.builtInZoomControls = true
+        webSetting.useWideViewPort = true
         webSetting.setSupportMultipleWindows(true)
-        // webSetting.setLoadWithOverviewMode(true);
         webSetting.setAppCacheEnabled(true)
-        // webSetting.setDatabaseEnabled(true);
-        webSetting.setDomStorageEnabled(true)
+        webSetting.domStorageEnabled = true
         webSetting.setGeolocationEnabled(true)
-        webSetting.setAppCacheMaxSize(java.lang.Long.MAX_VALUE)
-        webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND)
-        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE)
+        webSetting.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.webViewClient = client
         loadUrl()
     }

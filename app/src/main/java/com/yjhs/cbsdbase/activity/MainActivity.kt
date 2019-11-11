@@ -11,41 +11,50 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.yjhs.cbsd.mvp.BaseActivity
 import com.yjhs.cbsd.mvp.BaseVMActivity
 import com.yjhs.cbsd.utils.Tools
 import com.yjhs.cbsdbase.adapter.HomeAdapter
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.bean.InforModel
+import com.yjhs.cbsdbase.fragment.HomeFragment
+import com.yjhs.cbsdbase.fragment.MeFragment
+import com.yjhs.cbsdbase.fragment.PubFragment
 import com.yjhs.cbsdbase.model.TestViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.common_preview_title.*
+import kotlinx.android.synthetic.main.content_recycler_view.*
+import kotlinx.android.synthetic.main.content_refresh.*
+import me.yokeyword.fragmentation.SupportFragment
 import org.jetbrains.anko.startActivity
 
-class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemClickListener, OnRefreshListener,
-    OnLoadMoreListener {
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        val model = mList.get(position)
-        startActivity<DetailActivity>(Pair("strinforid",model.strinforid),Pair("strUserinfoid",model.struserinfoid),
-            Pair("strUrl",model.strUrl), Pair("isAd",false),Pair("isUrl", Tools.safeString(model.isUrl) == "1"),Pair("strBrandId",model.strbrandid)
-            ,Pair("strCarModelId",model.strcarmodelid),Pair("strCarSpecId",model.strcarspecid)
-        )
+class MainActivity : BaseActivity() {
+    private val mFragments = arrayOfNulls<SupportFragment>(3)
+    override fun initData() {
+        val firstFragment = findFragment(HomeFragment::class.java)
+
+        if (firstFragment == null) {
+            mFragments[0] = HomeFragment()
+            mFragments[1] = PubFragment()
+            mFragments[2] = MeFragment()
+            loadMultipleRootFragment(
+                R.id.fl_main, 0, mFragments[0],
+                mFragments[1],mFragments[2]
+            )
+        } else {
+            // 这里我们需要拿到mFragments的引用
+            mFragments[0] = firstFragment
+            mFragments[1] = findFragment(PubFragment::class.java)
+            mFragments[2] = findFragment(MeFragment::class.java)
+        }
+
     }
 
-    override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mCurrPager++
-        map.put("pageNumber",mCurrPager)
-        mViewModel.queryData(map)
+    override fun initView() {
     }
 
-    override fun onRefresh(refreshLayout: RefreshLayout) {
-        mCurrPager = 1
-        map.put("pageNumber",mCurrPager)
-        mViewModel.queryData(map)
-    }
+    override fun start() {
 
-    override fun onError(throwable: Throwable) {
-        sr_layout.finishRefresh()
-        sr_layout.finishLoadMore()
-        hideLoading()
     }
 
 
@@ -54,60 +63,27 @@ class MainActivity : BaseVMActivity(), BaseQuickAdapter.OnItemClickListener, OnR
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
-        rv.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        rv.adapter = adapter
-        adapter.onItemClickListener = this
-
-
-        mViewModel.infoBean.observe(this, Observer {
-            sr_layout.finishRefresh()
-            sr_layout.finishLoadMore()
-//            hideLoading()
-            if (mCurrPager == 1){
-                mList.clear()
-            }
-            mList.addAll(it)
-            if (mList.isEmpty()){
-                val nodata = TextView(this)
-                nodata.text = "暂无数据"
-                adapter.emptyView = nodata
-            }
-            adapter.notifyDataSetChanged()
-        })
-
-
-        sr_layout.setOnRefreshListener(this)
-        sr_layout.setOnLoadMoreListener(this)
-
-
-        showLoading()
-        map.put("pageSize",10)
-        map.put("pageNumber",mCurrPager)
-        mViewModel.queryData(map)
+        nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 
-    private val mViewModel by lazy { createViewModel<TestViewModel>() }
-    private val adapter by lazy { HomeAdapter(mList) }
-    private var mCurrPager = 1
-    private var mList = ArrayList<InforModel>()
-    private var map: HashMap<String,Any> = HashMap<String,Any>()
-    private lateinit var textMessage: TextView
+
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
+                showHideFragment(mFragments[0])
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
+                showHideFragment(mFragments[1])
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
+                showHideFragment(mFragments[2])
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
+
+
 }

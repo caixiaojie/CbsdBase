@@ -3,4 +3,15 @@
     <item name="dialog_commit_btn" type="id"/>
     <item name="dialog_close_btn" type="id"/>
 
+    <item name="empty_view" type="id"/>
+    <item name="error_view" type="id"/>
+    <item name="loading_view" type="id"/>
+    <item name="content_view" type="id"/>
+    <item name="no_network_view" type="id"/>
+    <item name="status_hint_content" type="id"/>
+
+    <item name="empty_retry_view" type="id"/>
+    <item name="error_retry_view" type="id"/>
+    <item name="no_network_retry_view" type="id"/>
+
 </resources>

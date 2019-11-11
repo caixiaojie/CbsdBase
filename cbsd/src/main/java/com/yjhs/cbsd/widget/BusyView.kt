@@ -24,14 +24,14 @@ import android.animation.ValueAnimator
 class BusyView(context: Context) : BaseDialog(context, R.style.LoadingDialogStyle) {
     private val dotText = arrayOf(".", "..", "...")
     private var valueAnimator: ValueAnimator? = null
-    private val loadingTxt = "加载中"
+    var loadingTxt = "加载中"
 
     override fun getLayout(): Int {
         return R.layout.busydialog
     }
 
     override fun init(view: View) {
-        message.text = "加载中"
+        message.text = loadingTxt
         if (valueAnimator == null) {
             valueAnimator = ValueAnimator.ofInt(0, 3).setDuration(1000)
             valueAnimator?.repeatCount = ValueAnimator.INFINITE

@@ -9,6 +9,6 @@ package com.yjhs.cbsd.mvp
  *
  */
 interface IBaseView {
-    fun showLoading()
+    fun showLoading(msg: String)
     fun hideLoading()
 }

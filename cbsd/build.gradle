@@ -38,6 +38,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.anko:anko:$anko_version"
     //liveData 和 ViewModel 等
     api "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
