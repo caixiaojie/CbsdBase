@@ -81,6 +81,13 @@ dependencies {
     api 'org.greenrobot:eventbus:3.1.1'
     //lottie动画
     api 'com.airbnb.android:lottie:3.1.0'
+    api 'pub.devrel:easypermissions:3.0.0'
+
+    api 'com.github.qingmei2:rximagepicker:2.5.1'
+    // 知乎图片选择器
+    api "com.github.qingmei2:rximagepicker_support_zhihu:2.5.1"
+// 微信图片选择器
+//    api "com.github.qingmei2:rximagepicker_support_wechat:$last_version"
 }
 repositories {
     mavenCentral()

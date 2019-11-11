@@ -70,7 +70,7 @@ class App : Application() {
             .showThreadInfo(true)  //（可选）是否显示线程信息。 默认值为true
             .methodCount(0)         // （可选）要显示的方法行数。 默认2
             .methodOffset(7)        // （可选）隐藏内部方法调用到偏移量。 默认5
-            .tag("FineVideo") //（可选）每个日志的全局标记。 默认PRETTY_LOGGER
+            .tag("cbsd") //（可选）每个日志的全局标记。 默认PRETTY_LOGGER
             .build()
         Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
     }
@@ -80,7 +80,6 @@ class App : Application() {
         if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
             //如果App被置换到后台时，清理所有的内存缓存
             Glide.get(this).clearMemory()
-//            GlideBitmapPool.clearMemory()
         }
         //交给Glide处理内存情况
         Glide.get(this).trimMemory(level)

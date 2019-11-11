@@ -12,6 +12,8 @@ import com.yjhs.cbsd.R
 import com.yjhs.cbsd.widget.MultipleStatusView
 import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportFragment
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
 /**
  *
@@ -21,7 +23,7 @@ import me.yokeyword.fragmentation.SupportFragment
  * @describe describe
  *
  */
-abstract class BaseFragment : SupportFragment(), IBaseView {
+abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.PermissionCallbacks {
 
     //是否首次加载
     private var isFirstLoad = true
@@ -133,4 +135,35 @@ abstract class BaseFragment : SupportFragment(), IBaseView {
                         + ", newViewStatus=" + newViewStatus
             )
         }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        //处理权限名字字符串
+        val sb = StringBuffer()
+        for (str in perms) {
+            sb.append(str)
+            sb.append("\n")
+        }
+        sb.replace(sb.length - 2, sb.length, "")
+        //用户点击拒绝并不在询问时候调用
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            Toast.makeText(_mActivity, "已拒绝权限" + sb + "并不再询问", Toast.LENGTH_SHORT).show()
+            AppSettingsDialog.Builder(this)
+                .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
+                .setPositiveButton("好")
+                .setNegativeButton("不行")
+                .build()
+                .show()
+        }
+    }
 }
