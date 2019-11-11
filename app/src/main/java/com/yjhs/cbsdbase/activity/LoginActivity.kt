@@ -42,6 +42,9 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
                 showLoading("登录中")
                 mViewModel.login(Tools.safeString(et_account),Tools.safeString(et_pwd))
             }
+            R.id.txt_forgot_pwd ->{
+                startActivity<ZhihuActivity>()
+            }
         }
     }
 
@@ -68,6 +71,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         })
 
         txt_login.setOnClickListener(this)
+        txt_forgot_pwd.setOnClickListener(this)
     }
 
     override fun onError(throwable: Throwable) {

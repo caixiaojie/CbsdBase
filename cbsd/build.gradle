@@ -87,7 +87,7 @@ dependencies {
     // 知乎图片选择器
     api "com.github.qingmei2:rximagepicker_support_zhihu:2.5.1"
 // 微信图片选择器
-//    api "com.github.qingmei2:rximagepicker_support_wechat:$last_version"
+    api "com.github.qingmei2:rximagepicker_support_wechat:2.5.1"
 }
 repositories {
     mavenCentral()
