@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ComponentCallbacks2
 import android.content.Context
 import android.util.Log
+import androidx.multidex.MultiDex
 import com.bumptech.glide.Glide
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.LogStrategy
@@ -31,6 +32,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         CONTEXT = applicationContext
+        // 初始化MultiDex
+        MultiDex.install(CONTEXT);
         initLogger()
         inItDb()
     }

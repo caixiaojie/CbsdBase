@@ -1,8 +1,8 @@
 package com.yjhs.cbsd.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.yjhs.cbsd.App
 import java.io.*
 import kotlin.properties.ReadWriteProperty
@@ -13,18 +13,16 @@ import kotlin.reflect.KProperty
 class Preference<T>(val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
 
     companion object {
-        const val PREVIEW_HORIZONTAL_MODEL = "preview_horizontal_model"
-        const val IS_FLOWSYSTEM = "isFlowSystem"
-        const val BRIGHTNESS = "brightness"
         const val session_id = "session_id"
         const val strImgRootPath = "strImgRootPath"
         const val strUserType = "strUserType"
-        //是否是夜间模式
-        const val NIGHT_BRIGHTNESS_MODEL = "NIGHT_BRIGHTNESS"
     }
 
+    private val sp_name = "APP_Config"
+
     private val prefs: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(App.CONTEXT)
+//        PreferenceManager.getDefaultSharedPreferences(App.CONTEXT)
+        App.CONTEXT.applicationContext.getSharedPreferences(sp_name, Context.MODE_PRIVATE)
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
@@ -51,7 +49,7 @@ class Preference<T>(val name: String, private val default: T) : ReadWritePropert
     fun <T> getValue(name: String, default: T): T = with(prefs) {
         val res: Any = when (default) {
             is Long -> getLong(name, default)
-            is String -> this!!.getString(name, default)!!
+            is String -> this.getString(name, default)!!
             is Int -> getInt(name, default)
             is Boolean -> getBoolean(name, default)
             is Float -> getFloat(name, default)
@@ -59,6 +57,9 @@ class Preference<T>(val name: String, private val default: T) : ReadWritePropert
         }
         return res as T
     }
+
+
+
 
     /**
      * 删除全部数据

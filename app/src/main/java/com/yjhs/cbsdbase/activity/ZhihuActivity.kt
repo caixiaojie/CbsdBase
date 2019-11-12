@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.orhanobut.logger.Logger
 import com.qingmei2.rximagepicker.core.RxImagePicker
 import com.qingmei2.rximagepicker.entity.Result
 import com.qingmei2.rximagepicker_extension.MimeType
