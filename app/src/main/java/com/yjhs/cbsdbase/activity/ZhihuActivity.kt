@@ -118,7 +118,7 @@ class ZhihuActivity : BaseActivity() {
      */
     private fun openGalleryAsNormal() {
         rxImagePicker.openGalleryAsNormal(this,
-            ZhihuConfigurationBuilder(MimeType.ofImage(), true)
+            ZhihuConfigurationBuilder(MimeType.ofImage(), false)
                 .capture(true)
                 .maxSelectable(9)
                 .countable(true)

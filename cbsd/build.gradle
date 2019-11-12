@@ -90,6 +90,7 @@ dependencies {
     api "com.github.qingmei2:rximagepicker_support_wechat:2.5.1"
     // 引入multidex库
     api 'com.android.support:multidex:1.0.3'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
 }
 repositories {
     mavenCentral()
