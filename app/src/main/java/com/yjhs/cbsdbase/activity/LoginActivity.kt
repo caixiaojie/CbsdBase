@@ -26,11 +26,20 @@ import pub.devrel.easypermissions.AppSettingsDialog
  * desc:
  */
 class LoginActivity : BaseVMActivity(), View.OnClickListener {
+    companion object {
+        private const val REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_CAMERA = 99
+        private const val REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_GALLERY_NORMAL = 100
+        private const val REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_GALLERY_Dracula = 101
+    }
     override fun initData() {
     }
 
     override fun initView() {
-        checkPermission()
+        val perms = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA)
+        checkPermission(perms,REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_CAMERA)
     }
 
     override fun start() {
@@ -43,7 +52,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
                 mViewModel.login(Tools.safeString(et_account),Tools.safeString(et_pwd))
             }
             R.id.txt_forgot_pwd ->{
-                startActivity<ZhihuActivity>()
+                startActivity<SimpleActivity>()
             }
         }
     }
@@ -78,21 +87,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         hideLoading()
     }
 
-    private fun checkPermission(){
-        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA)
-        EasyPermissions.requestPermissions(this, "应用需要以下权限，请允许", 0, *perms)
-    }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        if (requestCode == 0) {
-            if (perms.isNotEmpty()) {
-                perms.forEach {
-                    Logger.d(it.toString())
-                }
-
-            }
-        }
-    }
 
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,5 +106,39 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         val data: Uri = Uri.parse("tel:$phoneNum")
         intent.data = data
         startActivity(intent)
+    }
+
+    private fun checkPermission(perms: Array<String>,requestCode: Int){
+        EasyPermissions.requestPermissions(this, "应用需要以下权限，请允许", requestCode, *perms)
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        when(requestCode){
+            REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_CAMERA ->{
+                if (perms.isNotEmpty()) {
+                    if (perms.contains(Manifest.permission.READ_EXTERNAL_STORAGE)&&
+                        perms.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)&&
+                        perms.contains(Manifest.permission.CAMERA)){
+//                        openCamera()
+                    }
+                }
+            }
+            REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_GALLERY_NORMAL ->{
+                if (perms.isNotEmpty()) {
+                    if (perms.contains(Manifest.permission.READ_EXTERNAL_STORAGE)&&
+                        perms.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+//                        openGalleryAsNormal()
+                    }
+                }
+            }
+            REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_GALLERY_Dracula ->{
+                if (perms.isNotEmpty()) {
+                    if (perms.contains(Manifest.permission.READ_EXTERNAL_STORAGE)&&
+                        perms.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+//                        openGalleryAsDracula()
+                    }
+                }
+            }
+        }
     }
 }

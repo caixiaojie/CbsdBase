@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.common_preview_title.*
 import kotlinx.android.synthetic.main.content_recycler_view.*
 import kotlinx.android.synthetic.main.content_refresh.*
 import org.jetbrains.anko.support.v4.startActivity
+import com.yjhs.cbsd.utils.RecycleViewDivider
+
 
 /**
  * author: Administrator
@@ -38,6 +40,8 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
 
 
     override fun initView() {
+        mMultipleStatusView = multiple_status_view
+        recyclerView.addItemDecoration(RecycleViewDivider(_mActivity, LinearLayoutManager.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(_mActivity as Context?, RecyclerView.VERTICAL, false)
         recyclerView.adapter = adapter
         adapter.onItemClickListener = this
@@ -100,5 +104,6 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
         smart_refresh_layout.finishRefresh()
         smart_refresh_layout.finishLoadMore()
         hideLoading()
+        multiple_status_view.showError()
     }
 }

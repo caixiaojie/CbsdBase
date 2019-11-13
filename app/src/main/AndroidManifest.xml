@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ZhihuActivity"/>
+        <activity android:name=".activity.PhotoFragmentActivity"/>
+        <activity android:name=".activity.SimpleActivity"/>
+        <activity android:name=".activity.PhotoMainActivity"/>
     </application>
 
 </manifest>

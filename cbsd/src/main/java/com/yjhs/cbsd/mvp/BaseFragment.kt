@@ -27,7 +27,7 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
 
     //是否首次加载
     private var isFirstLoad = true
-    private var mMultipleStatusView: MultipleStatusView? = null
+    open var mMultipleStatusView: MultipleStatusView? = null
 
 
     override fun onCreateView(

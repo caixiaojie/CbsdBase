@@ -1,6 +1,7 @@
 package com.yjhs.cbsd.http
 
 import android.text.TextUtils
+import com.yjhs.cbsd.mvp.BaseError
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.ConnectException
@@ -25,38 +26,41 @@ class ExceptionHandle {
         private val GATEWAY_TIMEOUT = 504
 
         fun handleException(e: Throwable): Throwable? {
+            val ex: ApiException
             when (e) {
                 is HttpException -> {
+                    ex = ApiException(e, e.code())
                     when (e.code()) {
                         UNAUTHORIZED, FORBIDDEN, NOT_FOUND, REQUEST_TIMEOUT, GATEWAY_TIMEOUT, INTERNAL_SERVER_ERROR, SERVICE_UNAVAILABLE ->
-                            return Throwable("网络异常，请检查网络设置")
+//                            return Throwable("网络异常，请检查网络设置")
+                            return BaseError("网络异常，请检查网络设置",e.code())
                         BAD_GATEWAY -> {
-                            return Throwable("服务器异常")
+                            return BaseError("服务器异常",e.code())
                         }
                     }
                 }
                 is ConnectException -> {
-                    return Throwable("网络异常，请检查网络设置")
+                    return BaseError("网络异常，请检查网络设置",REQUEST_TIMEOUT)
                 }
                 is java.net.SocketTimeoutException -> {
-                    return Throwable("网络超时，请检查网络设置")
+                    return BaseError("网络超时，请检查网络设置",REQUEST_TIMEOUT)
                 }
                 is UnknownHostException -> {
-                    return Throwable("网络异常，请检查网络设置")
+                    return BaseError("网络异常，请检查网络设置",REQUEST_TIMEOUT)
                 }
                 is IOException -> {
-                    return Throwable("网络异常，请检查网络设置")
+                    return BaseError("网络异常，请检查网络设置",REQUEST_TIMEOUT)
                 }
                 is SocketException -> {
-                    return Throwable("网络异常，请检查网络设置")
+                    return BaseError("网络异常，请检查网络设置",REQUEST_TIMEOUT)
                 }
             }
 
             if(!TextUtils.isEmpty(e.message) && e.message!!.contains("Exception")) {
-                return Throwable("网络异常，请检查网络设置")
+                return BaseError("网络异常，请检查网络设置",REQUEST_TIMEOUT)
             }
 
-            return if(e.message == null) null else Throwable(e.message)
+            return if(e.message == null) null else BaseError(e.message,REQUEST_TIMEOUT)
         }
     }
 }
