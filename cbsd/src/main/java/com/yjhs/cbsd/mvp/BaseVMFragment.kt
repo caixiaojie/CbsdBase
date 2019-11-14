@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.yjhs.cbsd.http.ApiException
 
 /**
  *
@@ -28,13 +29,13 @@ abstract class BaseVMFragment : BaseFragment() {
         return mViewModel
     }
 
-    open fun toastMessage(throwable: Throwable) {
+    open fun toastMessage(throwable: ApiException) {
         if (!TextUtils.isEmpty(throwable.message)) {
-            Toast.makeText(_mActivity, throwable.message, Toast.LENGTH_LONG).show()
+            toastMsg(throwable.toString())
         }
     }
 
-    open fun onError(throwable: Throwable) {
+    open fun onError(throwable: ApiException) {
 
     }
 }

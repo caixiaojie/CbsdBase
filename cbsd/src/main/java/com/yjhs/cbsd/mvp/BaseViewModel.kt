@@ -10,6 +10,7 @@ import com.google.gson.JsonElement
 import com.yjhs.cbsd.App
 import com.yjhs.cbsd.enty.CBSDResultEntity
 import com.yjhs.cbsd.enty.ResultVO
+import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.http.ExceptionHandle
 import com.yjhs.cbsd.utils.ActivityUtil
 import kotlinx.coroutines.*
@@ -25,7 +26,7 @@ import kotlinx.coroutines.*
 open class BaseViewModel : ViewModel(), LifecycleObserver {
 
     //异常数据
-    val mException: MutableLiveData<Throwable> = MutableLiveData()
+    val mException: MutableLiveData<ApiException> = MutableLiveData()
 
 
     /**
@@ -44,6 +45,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                 } else {
                     response.msg = "未知异常"
                 }
+                response.code = ExceptionHandle.handleException(e)?.code!!
                 return@coroutineScope response
             }
         }
@@ -64,7 +66,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
             } else {
                 if (response.code == -1){
                     //登录已过期  或 用户未登录
-                    mException.value = Throwable("登录已过期,请重新登录")
+                    mException.value = ApiException("登录已过期,请重新登录",response.code)
                     val currentActivity = ActivityUtil.getCurrentActivity()
                     if (currentActivity != null) {
                         val intent = Intent(currentActivity, Class.forName("com.yjhs.cbsdbase.LoginActivity"))
@@ -72,9 +74,10 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                     }
                 }else{
                     if (response.data == null && !TextUtils.isEmpty(response.msg)) {
-                        mException.value = Throwable(response.msg)
+//                        mException.value = Throwable(response.msg)
+                        mException.value = ApiException(response.msg,response.code)
                     } else {
-                        mException.value = Throwable("未知异常")
+                        mException.value = ApiException("未知异常",response.code)
                     }
                 }
                 error.invoke(response)

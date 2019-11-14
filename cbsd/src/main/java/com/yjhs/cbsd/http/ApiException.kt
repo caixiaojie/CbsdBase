@@ -5,15 +5,20 @@ package com.yjhs.cbsd.http
  * date: 2019-11-13
  * desc:
  */
-class ApiException(throwable: Throwable, private val code: Int) : Exception(throwable) {
-    var displayMessage: String? = null
-        set(msg) {
-            field = "$msg(code:$code)"
-        }
+class ApiException(private val msg: String?, internal val code: Int) : Throwable(msg) {
 
-    companion object {
+//    var displayMessage: String? = null
+//        set(msg) {
+//            field = "$msg(code:$code)"
+//        }
+//
+//    companion object {
+//
+//        val UNKNOWN = 1000
+//        val PARSE_ERROR = 1001
+//    }
 
-        val UNKNOWN = 1000
-        val PARSE_ERROR = 1001
+    override fun toString(): String {
+        return "$msg(code:$code)"
     }
 }

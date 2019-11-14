@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.mvp.BaseFragment
 import com.yjhs.cbsd.mvp.BaseVMFragment
 import com.yjhs.cbsd.utils.Tools
@@ -100,7 +101,7 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
         mViewModel.queryData(map)
     }
 
-    override fun onError(throwable: Throwable) {
+    override fun onError(throwable: ApiException) {
         smart_refresh_layout.finishRefresh()
         smart_refresh_layout.finishLoadMore()
         hideLoading()

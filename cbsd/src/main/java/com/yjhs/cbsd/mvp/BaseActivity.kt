@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.gyf.immersionbar.ImmersionBar
@@ -16,6 +15,7 @@ import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportActivity
 import pub.devrel.easypermissions.EasyPermissions
 import android.R
+import org.jetbrains.anko.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -122,8 +122,8 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
         return mLoadingDialog != null && mLoadingDialog!!.isShowing
     }
 
-    fun toast(str: String) {
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
+    fun toastMsg(str: String) {
+        toast(str)
     }
 
     private val mRetryClickListener: View.OnClickListener = View.OnClickListener {

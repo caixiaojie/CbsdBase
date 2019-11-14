@@ -12,6 +12,7 @@ import com.yjhs.cbsd.R
 import com.yjhs.cbsd.widget.MultipleStatusView
 import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportFragment
+import org.jetbrains.anko.support.v4.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -101,8 +102,8 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
     //时间初始化方法
     protected abstract fun init(savedInstanceState: Bundle?)
 
-    fun toast(str: String) {
-        Toast.makeText(_mActivity, str, Toast.LENGTH_SHORT).show()
+    fun toastMsg(str: String) {
+        toast(str)
     }
 
 

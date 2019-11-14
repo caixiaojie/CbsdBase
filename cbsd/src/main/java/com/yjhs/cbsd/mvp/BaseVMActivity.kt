@@ -1,9 +1,9 @@
 package com.yjhs.cbsd.mvp
 
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.yjhs.cbsd.http.ApiException
 
 /**
  *
@@ -28,12 +28,12 @@ abstract class BaseVMActivity : BaseActivity() {
         return mViewModel
     }
 
-    open fun toastMessage(throwable: Throwable) {
+    open fun toastMessage(throwable: ApiException) {
         if (!TextUtils.isEmpty(throwable.message)) {
-            Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
+            toastMsg(throwable.toString())
         }
     }
 
-    open fun onError(throwable: Throwable) {
+    open fun onError(throwable: ApiException) {
     }
 }

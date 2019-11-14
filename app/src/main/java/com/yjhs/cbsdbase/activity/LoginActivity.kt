@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 import android.widget.Toast
+import com.yjhs.cbsd.http.ApiException
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -83,7 +84,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         txt_forgot_pwd.setOnClickListener(this)
     }
 
-    override fun onError(throwable: Throwable) {
+    override fun onError(throwable: ApiException) {
         hideLoading()
     }
 
@@ -141,4 +142,5 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
             }
         }
     }
+
 }

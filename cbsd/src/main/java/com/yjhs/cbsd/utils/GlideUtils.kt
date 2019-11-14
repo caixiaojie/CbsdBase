@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.Target
 import com.yjhs.cbsd.R
+import com.yjhs.cbsd.glid.GlideApp
 import com.yjhs.cbsd.glid.RoundedCornersTransformation
 
 /**
@@ -38,8 +39,9 @@ object GlideUtils {
             .placeholder(placeholder)
             .error(error)
             .override(width, height)
-        Glide.with(context).asBitmap().load(url).apply(options)
-            .into(viewTag)
+//        Glide.with(context).asBitmap().load(url).apply(options)
+//            .into(viewTag)
+        GlideApp.with(context).asBitmap().load(url).apply(options).into(viewTag)
     }
 
 
@@ -57,8 +59,9 @@ object GlideUtils {
             .placeholder(R.color.color_F6F5F7)
             .error(R.color.color_F6F5F7)
             .override(width, height)
-        Glide.with(context).load(url).apply(options)
-            .into(view)
+//        Glide.with(context).load(url).apply(options)
+//            .into(view)
+        GlideApp.with(context).asBitmap().load(url).apply(options).into(view)
     }
 
 
