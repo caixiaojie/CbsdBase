@@ -2,11 +2,11 @@ package com.yjhs.cbsdbase.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import com.orhanobut.logger.Logger
+import com.ycbjie.webviewlib.InterWebListener
+import com.ycbjie.webviewlib.X5WebUtils
 import com.yjhs.cbsd.mvp.BaseVMActivity
 import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsd.utils.Tools
@@ -15,6 +15,8 @@ import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.bean.ComparePriceReq
 import com.yjhs.cbsdbase.model.DetailViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
+
+
 
 /**
  * author: Administrator
@@ -26,6 +28,14 @@ class DetailActivity : BaseVMActivity() {
     }
 
     override fun initView() {
+        progress.show()
+        progress.setColor(
+            this.resources.getColor(R.color.colorAccent),
+            this.resources.getColor(R.color.colorPrimaryDark)
+        )
+
+        web_view.x5WebChromeClient.setWebListener(interWebListener)
+        web_view.x5WebViewClient.setWebListener(interWebListener)
     }
 
     override fun start() {
@@ -61,7 +71,7 @@ class DetailActivity : BaseVMActivity() {
             isUrl = it.getBoolean("isUrl",false)
         }
 
-        initWeb()
+        loadUrl()
 
         mViewModel.data.observe(this, Observer {
 
@@ -81,50 +91,90 @@ class DetailActivity : BaseVMActivity() {
         mViewModel.priceList(Tools.objectToMap(mPriceReq))
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun initWeb(){
-
-        val webSetting = webView.settings
-        webSetting.javaScriptEnabled = true
-        webSetting.javaScriptCanOpenWindowsAutomatically = true
-        webSetting.allowFileAccess = true
-        webSetting.setSupportZoom(true)
-        webSetting.builtInZoomControls = true
-        webSetting.useWideViewPort = true
-        webSetting.setSupportMultipleWindows(true)
-        webSetting.setAppCacheEnabled(true)
-        webSetting.domStorageEnabled = true
-        webSetting.setGeolocationEnabled(true)
-        webSetting.cacheMode = WebSettings.LOAD_NO_CACHE
-        webView.webViewClient = client
-        loadUrl()
-    }
-
     private fun loadUrl() {
         if (isAd) {
             if (isUrl) {
-                webView.loadUrl(ApiService.WEP_IP + "/#/AppAdvertisement/" + strinforid + "/" + session_id)
+                web_view.loadUrl(ApiService.WEP_IP + "/#/AppAdvertisement/" + strinforid + "/" + session_id)
             } else {
                 ///#/AppAdvertisement /传资讯ID/ 传session_id
-                webView.loadUrl(ApiService.WEP_IP + "/#/AppAdvertisement/" + strinforid + "/" + session_id)
+                web_view.loadUrl(ApiService.WEP_IP + "/#/AppAdvertisement/" + strinforid + "/" + session_id)
             }
         } else {
             if (isUrl) {
-                webView.loadUrl(ApiService.WEP_IP + "/#/HomeAppArticle/" + strinforid + "/" + session_id+ "/" + strUserType)
+                web_view.loadUrl(ApiService.WEP_IP + "/#/HomeAppArticle/" + strinforid + "/" + session_id+ "/" + strUserType)
             } else {
-                webView.loadUrl(ApiService.WEP_IP + "/#/HomeAppArticle/" + strinforid + "/" + session_id+ "/" + strUserType)
+                web_view.loadUrl(ApiService.WEP_IP + "/#/HomeAppArticle/" + strinforid + "/" + session_id+ "/" + strUserType)
             }
         }
         Logger.d(ApiService.WEP_IP + "/#/HomeAppArticle/" + strinforid + "/" + session_id+ "/" + strUserType)
     }
 
-    private val client = object : WebViewClient() {
-        /**
-         * 防止加载网页时调起系统浏览器
-         */
-        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            view.loadUrl(url)
-            return true
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onResume() {
+        super.onResume()
+        if (web_view != null) {
+            web_view.settings.javaScriptEnabled = true;
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        if (web_view!= null) {
+            web_view.settings.javaScriptEnabled = false;
+        }
+    }
+
+    override fun onDestroy() {
+        try {
+            if (web_view != null) {
+                web_view.stopLoading()
+                web_view.destroy()
+            }
+        } catch (e: Exception) {
+            Logger.e("X5WebViewActivity", e.message)
+        }
+        super.onDestroy()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (web_view.canGoBack() && event?.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            web_view.goBack()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private val interWebListener = object : InterWebListener {
+        override fun hindProgressBar() {
+            progress.hide()
+        }
+
+        override fun showErrorView(@X5WebUtils.ErrorType type: Int) {
+            when (type) {
+                //没有网络
+                X5WebUtils.ErrorMode.NO_NET -> {
+                }
+                //404，网页无法打开
+                X5WebUtils.ErrorMode.STATE_404 -> {
+                }
+                //onReceivedError，请求网络出现error
+                X5WebUtils.ErrorMode.RECEIVED_ERROR -> {
+                }
+                //在加载资源时通知主机应用程序发生SSL错误
+                X5WebUtils.ErrorMode.SSL_ERROR -> {
+                }
+                else -> {
+                }
+            }
+        }
+
+        override fun startProgress(newProgress: Int) {
+            progress.setWebProgress(newProgress)
+        }
+
+        override fun showTitle(title: String) {
+
+        }
+    }
+
 }

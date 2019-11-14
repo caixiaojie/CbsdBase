@@ -88,6 +88,7 @@ dependencies {
     api 'com.android.support:multidex:1.0.3'
 //    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
     api project(path: ':picture_library')
+    api 'cn.yc:WebViewLib:1.1.6'
 }
 repositories {
     mavenCentral()

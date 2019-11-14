@@ -18,9 +18,9 @@ import java.util.HashMap
  */
 interface ApiService {
     companion object {
-        const val BASE_URL = "http://api.cheyuanxiang.com:8080/share_ad_api_test/"
+        const val BASE_URL = "http://api.cheyuanxiang.com:8080/share_ad_api_v3/"//test
         const val ROOT_PATH = "http://api.cheyuanxiang.com:88/picpath/share_ad/"
-        const val WEP_IP = "http://mobile.cheyuanxiang.com"
+        const val WEP_IP = "http://mobilev3.cheyuanxiang.com"
     }
 
     //登录

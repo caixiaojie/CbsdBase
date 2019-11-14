@@ -13,6 +13,8 @@ import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.ycbjie.webviewlib.X5LogUtils
+import com.ycbjie.webviewlib.X5WebUtils
 import org.litepal.LitePal
 import kotlin.properties.Delegates
 
@@ -33,7 +35,9 @@ class App : Application() {
         super.onCreate()
         CONTEXT = applicationContext
         // 初始化MultiDex
-        MultiDex.install(CONTEXT);
+        MultiDex.install(CONTEXT)
+        X5WebUtils.init(CONTEXT)
+        X5LogUtils.setIsLog(true);
         initLogger()
         inItDb()
     }
