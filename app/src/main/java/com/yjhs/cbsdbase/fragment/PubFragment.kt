@@ -103,7 +103,7 @@ class PubFragment : BaseVMFragment(),IWebCallback {
         )
 
         web_view.x5WebChromeClient.setWebListener(interWebListener)
-//        web_view.x5WebChromeClient.setVideoWebListener(videoWebListener)
+        web_view.x5WebChromeClient.setVideoWebListener(videoWebListener)
         web_view.x5WebViewClient.setWebListener(interWebListener)
         mainThreadHandler = MyHandler(context!!)
     }
