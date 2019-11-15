@@ -1,8 +1,14 @@
 package com.yjhs.cbsdbase.fragment
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +19,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.mvp.BaseFragment
 import com.yjhs.cbsd.mvp.BaseVMFragment
+import com.yjhs.cbsd.ui.widget.dialog.PopDialog
 import com.yjhs.cbsd.utils.Tools
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.activity.DetailActivity
@@ -24,6 +31,9 @@ import kotlinx.android.synthetic.main.content_recycler_view.*
 import kotlinx.android.synthetic.main.content_refresh.*
 import org.jetbrains.anko.support.v4.startActivity
 import com.yjhs.cbsd.utils.RecycleViewDivider
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 /**
@@ -38,6 +48,7 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
     private var mCurrPager = 1
     private var mList = ArrayList<InforModel>()
     private var map: HashMap<String,Any> = HashMap<String,Any>()
+    private lateinit var pop: PopDialog
 
 
     override fun initView() {
@@ -82,11 +93,13 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        val model = mList.get(position)
-        startActivity<DetailActivity>(Pair("strinforid",model.strinforid),Pair("strUserinfoid",model.struserinfoid),
-            Pair("strUrl",model.strUrl), Pair("isAd",false),Pair("isUrl", Tools.safeString(model.isUrl) == "1"),Pair("strBrandId",model.strbrandid)
-            ,Pair("strCarModelId",model.strcarmodelid),Pair("strCarSpecId",model.strcarspecid)
-        )
+        val model = mList[position]
+
+//        showPop(position)
+//        showLoading("测试")
+        pop = PopDialog(_mActivity)
+        pop.model = model
+        pop.show()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -106,5 +119,10 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
         smart_refresh_layout.finishLoadMore()
         hideLoading()
         multiple_status_view.showError()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        pop.dismiss()
     }
 }

@@ -2,9 +2,9 @@ package com.yjhs.cbsdbase
 
 
 import com.yjhs.cbsd.enty.ResultVO
-import com.yjhs.cbsdbase.bean.CommonListResp
-import com.yjhs.cbsdbase.bean.ComparePriceResp
-import com.yjhs.cbsdbase.bean.LoginResp
+import com.yjhs.cbsdbase.bean.*
+import io.reactivex.Observable
+import okhttp3.MultipartBody
 import retrofit2.http.*
 import java.util.HashMap
 
@@ -42,6 +42,17 @@ interface ApiService {
     @FormUrlEncoded
     @POST("app/had-login/library/comparePrice")
     suspend fun comparePrice(@FieldMap req: HashMap<String, Any>): ResultVO<ArrayList<ComparePriceResp>>
+
+    //上传多图
+    @Multipart
+    @POST("app/had-login/file/fileUploads")
+    suspend fun imagesUpload(@Part parts: List<MultipartBody.Part>): ResultVO<ImgsUploadResp>
+
+    //上传文件
+    @Multipart
+    @POST("app/had-login/file/fileUpload")
+    suspend fun fileUpload(@Part parts: List<MultipartBody.Part>): ResultVO<FileUploadResp>
+//    suspend fun fileUpload(@Part file: MultipartBody.Part): ResultVO<FileUploadResp>
 
 
 }

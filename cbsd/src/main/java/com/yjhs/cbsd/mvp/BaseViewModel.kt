@@ -14,6 +14,7 @@ import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.http.ExceptionHandle
 import com.yjhs.cbsd.utils.ActivityUtil
 import kotlinx.coroutines.*
+import luyao.util.ktx.core.lifecycle.KtxManager
 
 /**
  *
@@ -69,7 +70,8 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                     mException.value = ApiException("登录已过期,请重新登录",response.code)
                     val currentActivity = ActivityUtil.getCurrentActivity()
                     if (currentActivity != null) {
-                        val intent = Intent(currentActivity, Class.forName("com.yjhs.cbsdbase.LoginActivity"))
+                        KtxManager.finishAllActivity()
+                        val intent = Intent(currentActivity, Class.forName("com.yjhs.cbsdbase.activity.LoginActivity"))
                         currentActivity.startActivity(intent)
                     }
                 }else{

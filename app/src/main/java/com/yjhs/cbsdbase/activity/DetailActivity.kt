@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import com.orhanobut.logger.Logger
 import com.ycbjie.webviewlib.InterWebListener
+import com.ycbjie.webviewlib.VideoWebListener
 import com.ycbjie.webviewlib.X5WebUtils
 import com.yjhs.cbsd.mvp.BaseVMActivity
 import com.yjhs.cbsd.utils.Preference
@@ -35,6 +36,7 @@ class DetailActivity : BaseVMActivity() {
         )
 
         web_view.x5WebChromeClient.setWebListener(interWebListener)
+        web_view.x5WebChromeClient.setVideoWebListener(videoWebListener)
         web_view.x5WebViewClient.setWebListener(interWebListener)
     }
 
@@ -174,6 +176,24 @@ class DetailActivity : BaseVMActivity() {
 
         override fun showTitle(title: String) {
 
+        }
+    }
+
+    private val videoWebListener = object : VideoWebListener {
+        override fun showVideoFullView() {
+            //视频全频播放时监听
+        }
+
+        override fun hindVideoFullView() {
+            //隐藏全频播放，也就是正常播放视频
+        }
+
+        override fun showWebView() {
+            //显示webView
+        }
+
+        override fun hindWebView() {
+            //隐藏webView
         }
     }
 
