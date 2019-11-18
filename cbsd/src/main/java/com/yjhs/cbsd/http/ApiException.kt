@@ -5,7 +5,7 @@ package com.yjhs.cbsd.http
  * date: 2019-11-13
  * desc:
  */
-class ApiException(private val msg: String?, internal val code: Int) : Throwable(msg) {
+class ApiException(private val msg: String?, val code: Int) : Throwable(msg) {
 
 //    var displayMessage: String? = null
 //        set(msg) {

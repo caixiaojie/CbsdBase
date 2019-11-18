@@ -17,6 +17,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.yjhs.cbsd.http.ApiException
+import com.yjhs.cbsd.http.ExceptionHandle
 import com.yjhs.cbsd.mvp.BaseFragment
 import com.yjhs.cbsd.mvp.BaseVMFragment
 import com.yjhs.cbsd.ui.widget.dialog.PopDialog
@@ -118,7 +119,11 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
         smart_refresh_layout.finishRefresh()
         smart_refresh_layout.finishLoadMore()
         hideLoading()
-        multiple_status_view.showError()
+        if (throwable.code == ExceptionHandle.NETWORK_DISCONNECT){
+            multiple_status_view.showError()
+        }else {
+            multiple_status_view.showError()
+        }
     }
 
     override fun onDestroy() {

@@ -1,6 +1,8 @@
 package com.yjhs.cbsd.http
 
 import android.text.TextUtils
+import com.yjhs.cbsd.App
+import com.yjhs.cbsd.utils.NetWorkUtils
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.ConnectException
@@ -58,6 +60,7 @@ class ExceptionHandle {
         private val BAD_GATEWAY = 502
         private val SERVICE_UNAVAILABLE = 503
         private val GATEWAY_TIMEOUT = 504
+        val NETWORK_DISCONNECT = 10000
         //500 内部服务器错误（Internal Server Error）
         //
         // 　　　　501 未执行（Not Implemented）
@@ -72,57 +75,62 @@ class ExceptionHandle {
 
         fun handleException(e: Throwable): ApiException? {
 //            var ex: ApiException
-            when (e) {
-                is HttpException -> {
-                    when (e.code()) {
-                        UNAUTHORIZED ->{
-                            return ApiException("未授权",e.code())
-                        }
-                        FORBIDDEN ->{
-                            return ApiException("禁止访问",e.code())
-                        }
-                        NOT_FOUND ->
+            if (NetWorkUtils.isNetworkAvailable(App.CONTEXT)){
+                when (e) {
+                    is HttpException -> {
+                        when (e.code()) {
+                            UNAUTHORIZED ->{
+                                return ApiException("未授权",e.code())
+                            }
+                            FORBIDDEN ->{
+                                return ApiException("禁止访问",e.code())
+                            }
+                            NOT_FOUND ->
 //                            return Throwable("网络异常，请检查网络设置")
-                            return ApiException("未找到",e.code())
-                        REQUEST_TIMEOUT ->{
-                            return ApiException("请求超时",e.code())
-                        }
-                        SERVICE_UNAVAILABLE ->{
-                            return ApiException("服务不可用",e.code())
-                        }
-                        GATEWAY_TIMEOUT ->{
-                            return ApiException("网关超时",e.code())
-                        }
-                        INTERNAL_SERVER_ERROR ->{
-                            return ApiException("服务器内部错误",e.code())
-                        }
-                        BAD_GATEWAY -> {
+                                return ApiException("未找到",e.code())
+                            REQUEST_TIMEOUT ->{
+                                return ApiException("请求超时",e.code())
+                            }
+                            SERVICE_UNAVAILABLE ->{
+                                return ApiException("服务不可用",e.code())
+                            }
+                            GATEWAY_TIMEOUT ->{
+                                return ApiException("网关超时",e.code())
+                            }
+                            INTERNAL_SERVER_ERROR ->{
+                                return ApiException("服务器内部错误",e.code())
+                            }
+                            BAD_GATEWAY -> {
 //                            return Throwable("服务器异常")
-                            return ApiException("服务器异常",e.code())
+                                return ApiException("服务器异常",e.code())
+                            }
                         }
                     }
-                }
-                is ConnectException -> {
+                    is ConnectException -> {
 //                    return Throwable("网络异常，请检查网络设置")
-                    return ApiException("网络异常，请检查网络设置",GATEWAY_TIMEOUT)
-                }
-                is java.net.SocketTimeoutException -> {
+                        return ApiException("网络异常，请检查网络设置",GATEWAY_TIMEOUT)
+                    }
+                    is java.net.SocketTimeoutException -> {
 //                    return Throwable("网络超时，请检查网络设置")
-                    return ApiException("网络超时，请检查网络设置",GATEWAY_TIMEOUT)
-                }
-                is UnknownHostException -> {
+                        return ApiException("网络超时，请检查网络设置",GATEWAY_TIMEOUT)
+                    }
+                    is UnknownHostException -> {
 //                    return Throwable("网络异常，请检查网络设置")
-                    return ApiException("未知名称或服务",GATEWAY_TIMEOUT)
-                }
-                is IOException -> {
+                        return ApiException("未知名称或服务",GATEWAY_TIMEOUT)
+                    }
+                    is IOException -> {
 //                    return Throwable("网络异常，请检查网络设置")
-                    return ApiException("网络异常，请检查网络设置",GATEWAY_TIMEOUT)
-                }
-                is SocketException -> {
+                        return ApiException("网络异常，请检查网络设置",GATEWAY_TIMEOUT)
+                    }
+                    is SocketException -> {
 //                    return Throwable("网络异常，请检查网络设置")
-                    return ApiException("网络异常，请检查网络设置",GATEWAY_TIMEOUT)
+                        return ApiException("网络异常，请检查网络设置",GATEWAY_TIMEOUT)
+                    }
                 }
+            }else{
+                return ApiException("网络不给力,请检查网络设置",NETWORK_DISCONNECT)
             }
+
 
             if(!TextUtils.isEmpty(e.message) && e.message!!.contains("Exception")) {
 //                return Throwable("网络异常，请检查网络设置")
