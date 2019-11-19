@@ -6,8 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import com.orhanobut.logger.Logger
-import com.yjhs.cbsd.mvp.BaseVMActivity
+import com.yjhs.cbsd.base.BaseVMActivity
 import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsd.utils.Tools
 import com.yjhs.cbsdbase.R

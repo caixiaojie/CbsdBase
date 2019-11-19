@@ -1,7 +1,7 @@
 package com.yjhs.cbsdbase.model
 
 import androidx.lifecycle.MutableLiveData
-import com.yjhs.cbsd.mvp.BaseViewModel
+import com.yjhs.cbsd.base.BaseViewModel
 import com.yjhs.cbsdbase.bean.ComparePriceResp
 import com.yjhs.cbsdbase.RetrofitClient
 import java.util.HashMap

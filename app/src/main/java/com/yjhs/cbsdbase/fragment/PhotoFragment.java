@@ -14,7 +14,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yjhs.cbsd.mvp.BaseFragment;
+import com.yjhs.cbsd.base.BaseFragment;
 import com.yjhs.cbsdbase.FullyGridLayoutManager;
 import com.yjhs.cbsdbase.R;
 import com.yjhs.cbsdbase.adapter.GridImageAdapter;

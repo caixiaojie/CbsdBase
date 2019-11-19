@@ -1,7 +1,6 @@
-package com.yjhs.cbsd.mvp
+package com.yjhs.cbsd.base
 
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yjhs.cbsd.http.ApiException

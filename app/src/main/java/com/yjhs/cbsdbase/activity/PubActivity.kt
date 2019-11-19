@@ -1,7 +1,7 @@
 package com.yjhs.cbsdbase.activity
 
 import android.os.Bundle
-import com.yjhs.cbsd.mvp.BaseActivity
+import com.yjhs.cbsd.base.BaseActivity
 import com.yjhs.cbsdbase.R
 
 /**

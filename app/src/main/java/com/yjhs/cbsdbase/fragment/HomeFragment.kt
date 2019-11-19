@@ -1,14 +1,8 @@
 package com.yjhs.cbsdbase.fragment
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,21 +12,16 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.http.ExceptionHandle
-import com.yjhs.cbsd.mvp.BaseFragment
-import com.yjhs.cbsd.mvp.BaseVMFragment
+import com.yjhs.cbsd.base.BaseVMFragment
 import com.yjhs.cbsd.ui.widget.dialog.PopDialog
-import com.yjhs.cbsd.utils.Tools
 import com.yjhs.cbsdbase.R
-import com.yjhs.cbsdbase.activity.DetailActivity
 import com.yjhs.cbsdbase.adapter.HomeAdapter
 import com.yjhs.cbsdbase.bean.InforModel
 import com.yjhs.cbsdbase.model.TestViewModel
 import kotlinx.android.synthetic.main.common_preview_title.*
 import kotlinx.android.synthetic.main.content_recycler_view.*
 import kotlinx.android.synthetic.main.content_refresh.*
-import org.jetbrains.anko.support.v4.startActivity
 import com.yjhs.cbsd.utils.RecycleViewDivider
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 

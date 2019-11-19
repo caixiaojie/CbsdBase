@@ -1,16 +1,14 @@
 package com.yjhs.cbsdbase.model
 
 import androidx.lifecycle.MutableLiveData
-import com.yjhs.cbsd.mvp.BaseViewModel
+import com.yjhs.cbsd.base.BaseViewModel
 import com.yjhs.cbsd.utils.FormFile
-import com.yjhs.cbsdbase.bean.ComparePriceResp
 import com.yjhs.cbsdbase.RetrofitClient
 import com.yjhs.cbsdbase.bean.FileUploadResp
 import com.yjhs.cbsdbase.bean.ImgsUploadResp
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.util.HashMap
 
 /**
  *

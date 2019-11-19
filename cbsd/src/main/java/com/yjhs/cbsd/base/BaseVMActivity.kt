@@ -1,4 +1,4 @@
-package com.yjhs.cbsd.mvp
+package com.yjhs.cbsd.base
 
 import android.text.TextUtils
 import androidx.lifecycle.Observer

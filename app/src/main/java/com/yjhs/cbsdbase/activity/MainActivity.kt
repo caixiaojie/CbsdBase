@@ -1,32 +1,14 @@
 package com.yjhs.cbsdbase.activity
 
 import android.os.Bundle
-import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
-import com.yjhs.cbsd.mvp.BaseActivity
-import com.yjhs.cbsd.mvp.BaseVMActivity
-import com.yjhs.cbsd.utils.Tools
-import com.yjhs.cbsdbase.adapter.HomeAdapter
+import com.yjhs.cbsd.base.BaseActivity
 import com.yjhs.cbsdbase.R
-import com.yjhs.cbsdbase.bean.InforModel
 import com.yjhs.cbsdbase.fragment.HomeFragment
 import com.yjhs.cbsdbase.fragment.MeFragment
 import com.yjhs.cbsdbase.fragment.PubFragment
-import com.yjhs.cbsdbase.model.TestViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.common_preview_title.*
-import kotlinx.android.synthetic.main.content_recycler_view.*
-import kotlinx.android.synthetic.main.content_refresh.*
 import me.yokeyword.fragmentation.SupportFragment
-import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseActivity() {
     private val mFragments = arrayOfNulls<SupportFragment>(3)

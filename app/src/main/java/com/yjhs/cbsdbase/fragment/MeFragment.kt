@@ -1,7 +1,7 @@
 package com.yjhs.cbsdbase.fragment
 
 import android.os.Bundle
-import com.yjhs.cbsd.mvp.BaseFragment
+import com.yjhs.cbsd.base.BaseFragment
 import com.yjhs.cbsdbase.R
 
 /**

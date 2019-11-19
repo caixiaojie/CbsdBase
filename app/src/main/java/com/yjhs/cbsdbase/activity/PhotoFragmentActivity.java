@@ -7,7 +7,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.tools.PictureFileUtils;
-import com.yjhs.cbsd.mvp.BaseActivity;
+import com.yjhs.cbsd.base.BaseActivity;
 import com.yjhs.cbsdbase.R;
 import com.yjhs.cbsdbase.fragment.PhotoFragment;
 import io.reactivex.Observer;

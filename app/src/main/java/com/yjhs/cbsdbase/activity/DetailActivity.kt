@@ -8,7 +8,7 @@ import com.orhanobut.logger.Logger
 import com.ycbjie.webviewlib.InterWebListener
 import com.ycbjie.webviewlib.VideoWebListener
 import com.ycbjie.webviewlib.X5WebUtils
-import com.yjhs.cbsd.mvp.BaseVMActivity
+import com.yjhs.cbsd.base.BaseVMActivity
 import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsd.utils.Tools
 import com.yjhs.cbsdbase.ApiService

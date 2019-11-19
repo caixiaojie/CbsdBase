@@ -14,11 +14,10 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.orhanobut.logger.Logger
-import com.tencent.smtt.sdk.ValueCallback
 import com.ycbjie.webviewlib.InterWebListener
 import com.ycbjie.webviewlib.VideoWebListener
 import com.ycbjie.webviewlib.X5WebUtils
-import com.yjhs.cbsd.mvp.BaseVMFragment
+import com.yjhs.cbsd.base.BaseVMFragment
 import com.yjhs.cbsd.utils.FormFile
 import com.yjhs.cbsdbase.ApiService
 import com.yjhs.cbsdbase.R

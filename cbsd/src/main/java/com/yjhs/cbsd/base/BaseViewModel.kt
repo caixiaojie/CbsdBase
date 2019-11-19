@@ -1,4 +1,4 @@
-package com.yjhs.cbsd.mvp
+package com.yjhs.cbsd.base
 
 import android.content.Intent
 import android.text.TextUtils
@@ -6,9 +6,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonElement
-import com.yjhs.cbsd.App
-import com.yjhs.cbsd.enty.CBSDResultEntity
 import com.yjhs.cbsd.enty.ResultVO
 import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.http.ExceptionHandle
@@ -82,7 +79,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                         mException.value = ApiException("未知异常",response.code)
                     }
                 }
-                error.invoke(response)
+                error(response)//等价与error.invoke(response)
             }
         }
     }
