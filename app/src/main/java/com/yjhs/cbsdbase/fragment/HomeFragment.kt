@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.material.appbar.AppBarLayout
+import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -14,6 +16,7 @@ import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.http.ExceptionHandle
 import com.yjhs.cbsd.base.BaseVMFragment
 import com.yjhs.cbsd.ui.widget.dialog.PopDialog
+import com.yjhs.cbsd.utils.DisplayUtils
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.adapter.HomeAdapter
 import com.yjhs.cbsdbase.bean.InforModel
@@ -22,6 +25,10 @@ import kotlinx.android.synthetic.main.common_preview_title.*
 import kotlinx.android.synthetic.main.content_recycler_view.*
 import kotlinx.android.synthetic.main.content_refresh.*
 import com.yjhs.cbsd.utils.RecycleViewDivider
+import com.yjhs.cbsd.utils.Tools
+import com.yjhs.cbsdbase.GlideImageLoader
+import kotlinx.android.synthetic.main.common_preview_title.toolbar
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -39,6 +46,7 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
     private var mList = ArrayList<InforModel>()
     private var map: HashMap<String,Any> = HashMap<String,Any>()
     private lateinit var pop: PopDialog
+    private val banners = arrayListOf(R.mipmap._1,R.mipmap._2,R.mipmap._3,R.mipmap._4,R.mipmap._5,R.mipmap._6)
 
 
     override fun initView() {
@@ -48,8 +56,9 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
         recyclerView.adapter = adapter
         adapter.onItemClickListener = this
 
-        img_back.visibility = View.GONE
-        setToolBarTitle(toolbar,"首页")
+        toolbar.background.alpha = 0
+        txt_title.alpha = 0f
+        banner.setImageLoader(GlideImageLoader()).setImages(banners).start()
     }
 
     override fun lazyLoad() {
@@ -80,6 +89,20 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
 
         smart_refresh_layout.setOnRefreshListener(this)
         smart_refresh_layout.setOnLoadMoreListener(this)
+        val alphaMaxOffset = DisplayUtils.dp2px(89f) - Tools.getStatusBarHeight(_mActivity)
+        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            Logger.d("$verticalOffset------$alphaMaxOffset------${Tools.getStatusBarHeight(_mActivity)}")
+            // 设置 toolbar 背景
+            if (verticalOffset > -alphaMaxOffset) {
+                toolbar.background.alpha = 255 * -verticalOffset / alphaMaxOffset;
+                txt_title.alpha = -verticalOffset / alphaMaxOffset.toFloat();
+                Logger.d("alpha:${255 * -verticalOffset / alphaMaxOffset}")
+            } else {
+                toolbar.background.alpha = 255;
+                txt_title.alpha = 1f;
+                Logger.d("alpha:255")
+            }
+        })
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
@@ -118,5 +141,15 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
     override fun onDestroy() {
         super.onDestroy()
         pop.dismiss()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        banner.startAutoPlay()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        banner.stopAutoPlay()
     }
 }

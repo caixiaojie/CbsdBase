@@ -100,7 +100,7 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
         }
         if (mLoadingDialog == null) {
             mLoadingDialog = BusyView(this)
-            mLoadingDialog?.loadingTxt = msg
+            mLoadingDialog!!.loadingTxt = msg
         }
         if (!mLoadingDialog!!.isShowing) {
             mLoadingDialog!!.show()

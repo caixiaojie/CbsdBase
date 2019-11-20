@@ -47,7 +47,7 @@ object GlideUtils {
 
     fun loadImage(
         context: Context,
-        url: String?,
+        url: Any?,
         view: ImageView,
         roundingRadius: Float = 8f,
         width: Int = Target.SIZE_ORIGINAL,
