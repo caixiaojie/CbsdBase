@@ -1,8 +1,13 @@
 package com.yjhs.cbsdbase.activity
 
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.os.Environment
+import com.aspose.words.Document
+import com.aspose.words.SaveFormat
 import com.yjhs.cbsd.base.BaseActivity
 import com.yjhs.cbsdbase.R
+import java.io.File
 
 /**
  * author: Administrator
@@ -18,11 +23,19 @@ class PubActivity : BaseActivity() {
     }
 
     override fun initView() {
+        //D:\ganhuo\CbsdBase\app\src\main\assets\Proxifier使用手册.docx
     }
 
     override fun start() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+//        val inputFile = File(getExternalFilesDir("Proxifier使用手册.docx"))
+//        val document = Document(getExternalFilesDir("test.docx")?.absolutePath)
+//        val outputFile = File(getExternalFilesDir(null)?.absolutePath+"/hh.pdf")
+//        Thread(Runnable {
+//            document.save(outputFile.absolutePath, SaveFormat.PDF)
+//        }).start()
+
     }
 }
