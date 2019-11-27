@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.*
 import android.view.View
 import android.webkit.JavascriptInterface
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -39,6 +40,7 @@ import kotlin.collections.ArrayList
  * date: 2019-11-11
  * desc:
  */
+@SuppressLint("SetJavaScriptEnabled")
 class PubFragment : BaseVMFragment(),IWebCallback {
     private val SELECTIMG = "selectImg"
     private val SELECTVIDEO = "selectVideo"
@@ -97,8 +99,8 @@ class PubFragment : BaseVMFragment(),IWebCallback {
         setToolBarTitle(toolbar,"发布")
         progress.show()
         progress.setColor(
-            this.resources.getColor(R.color.colorAccent),
-            this.resources.getColor(R.color.colorPrimaryDark)
+            ContextCompat.getColor(_mActivity,R.color.colorAccent),
+            ContextCompat.getColor(_mActivity,R.color.colorPrimaryDark)
         )
 
         web_view.x5WebChromeClient.setWebListener(interWebListener)
@@ -123,8 +125,8 @@ class PubFragment : BaseVMFragment(),IWebCallback {
             @JavascriptInterface
             fun cbsd(info: String) {
                 val jsonVO = JsonBridgeBean.getInstance(info) ?: return
-                val msg = mainThreadHandler?.obtainMessage(HANDLE_MESSAGE, jsonVO)
-                mainThreadHandler?.sendMessage(msg)
+                val msg: Message? = mainThreadHandler?.obtainMessage(HANDLE_MESSAGE, jsonVO)
+                mainThreadHandler?.sendMessage(msg!!)
             }
         }, "mobile")
 
@@ -141,7 +143,7 @@ class PubFragment : BaseVMFragment(),IWebCallback {
         })
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+
     override fun onResume() {
         super.onResume()
         if (web_view != null) {
@@ -374,7 +376,7 @@ class PubFragment : BaseVMFragment(),IWebCallback {
             toastMsg("请先编辑文章")
             return
         }
-        val editArticleVo = Gson().fromJson<Any>(msg, object : TypeToken<EditArticleResp>() {}.type) as EditArticleResp
+        val editArticleVo: EditArticleResp? = Gson().fromJson<Any>(msg, object : TypeToken<EditArticleResp>() {}.type) as EditArticleResp
         if (editArticleVo != null) {
             val title = editArticleVo.title
             val content = editArticleVo.content

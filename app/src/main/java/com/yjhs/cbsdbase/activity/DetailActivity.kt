@@ -3,6 +3,7 @@ package com.yjhs.cbsdbase.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.orhanobut.logger.Logger
 import com.ycbjie.webviewlib.InterWebListener
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
  * date: 2019-11-8
  * desc:
  */
+@SuppressLint("SetJavaScriptEnabled")
 class DetailActivity : BaseVMActivity() {
     override fun initData() {
     }
@@ -31,8 +33,8 @@ class DetailActivity : BaseVMActivity() {
     override fun initView() {
         progress.show()
         progress.setColor(
-            this.resources.getColor(R.color.colorAccent),
-            this.resources.getColor(R.color.colorPrimaryDark)
+            ContextCompat.getColor(this,R.color.colorAccent),
+            ContextCompat.getColor(this,R.color.colorPrimaryDark)
         )
 
         web_view.x5WebChromeClient.setWebListener(interWebListener)
@@ -111,7 +113,7 @@ class DetailActivity : BaseVMActivity() {
         Logger.d(ApiService.WEP_IP + "/#/HomeAppArticle/" + strinforid + "/" + session_id+ "/" + strUserType)
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+
     override fun onResume() {
         super.onResume()
         if (web_view != null) {

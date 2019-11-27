@@ -89,6 +89,7 @@ dependencies {
 //    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
     api project(path: ':picture_library')
     api 'cn.yc:WebViewLib:1.1.6'
+    api project(path: ':FlycoTabLayout_Lib')
 }
 repositories {
     mavenCentral()

@@ -44,7 +44,7 @@ data class InforModel(
     val strcolumnname: String,
     val strcreatetime: String,
     val strdeletetime: String,
-    val strimage: String,
+    val strimage: String?,
     val strinforid: String,
     val strremark: String,
     val strstate: String,

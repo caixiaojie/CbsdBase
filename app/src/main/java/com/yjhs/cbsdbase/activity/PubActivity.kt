@@ -3,8 +3,6 @@ package com.yjhs.cbsdbase.activity
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
-import com.aspose.words.Document
-import com.aspose.words.SaveFormat
 import com.yjhs.cbsd.base.BaseActivity
 import com.yjhs.cbsdbase.R
 import java.io.File

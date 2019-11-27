@@ -1,1 +1,1 @@
-include ':app', ':cbsd', ':picture_library', ':ucrop', ':banner'
+include ':app', ':cbsd', ':picture_library', ':ucrop', ':banner', ':FlycoTabLayout_Lib'

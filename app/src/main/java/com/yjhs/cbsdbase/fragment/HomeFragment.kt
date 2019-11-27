@@ -90,7 +90,7 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
         smart_refresh_layout.setOnRefreshListener(this)
         smart_refresh_layout.setOnLoadMoreListener(this)
         val alphaMaxOffset = DisplayUtils.dp2px(89f) - Tools.getStatusBarHeight(_mActivity)
-        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             Logger.d("$verticalOffset------$alphaMaxOffset------${Tools.getStatusBarHeight(_mActivity)}")
             // 设置 toolbar 背景
             if (verticalOffset > -alphaMaxOffset) {

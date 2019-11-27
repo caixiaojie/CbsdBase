@@ -26,7 +26,7 @@ class FileUploadModel : BaseViewModel() {
 
 
 
-    fun fileUpload(formFiles: MutableList<FormFile>,temp: Int) {
+    fun fileUpload(formFiles: MutableList<FormFile>?,temp: Int) {
         val parts = ArrayList<MultipartBody.Part>()
         if (formFiles != null && formFiles.size > 0) {
             for (i in formFiles.indices) {
