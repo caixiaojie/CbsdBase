@@ -43,6 +43,10 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
     }
 
     override fun start() {
+        if (!session_id.isNullOrEmpty()){
+            startActivity<MainActivity>()
+            finish()
+        }
     }
 
     override fun onClick(p0: View?) {
@@ -76,6 +80,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
             strUserType = userinfo.strUserType
             if (userinfo.iState == 0){
                 startActivity<MainActivity>()
+                finish()
             }
         })
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.yjhs.cbsd.base.BaseFragment
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.activity.FileActivity
+import com.yjhs.cbsdbase.view.PieActivity
 import kotlinx.android.synthetic.main.fragment_me.*
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -26,6 +27,9 @@ class MeFragment : BaseFragment() {
     override fun init(savedInstanceState: Bundle?) {
         ll_account_manage.setOnClickListener {
             startActivity<FileActivity>()
+        }
+        ll_change_pwd.setOnClickListener {
+            startActivity<PieActivity>()
         }
     }
 }

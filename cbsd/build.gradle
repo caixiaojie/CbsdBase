@@ -63,10 +63,10 @@ dependencies {
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
 
     //glide
-    api ("com.github.bumptech.glide:glide:4.9.0") {
+    api ("com.github.bumptech.glide:glide:4.10.0") {
         exclude group: "com.android.support"
     }
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.10.0'
     api  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'//核心必须依赖
     api  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
     api  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
