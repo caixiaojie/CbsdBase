@@ -10,6 +10,9 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.ImageView
 import com.yjhs.cbsdbase.R
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.sqrt
 
 /**
  * author: Administrator
@@ -278,7 +281,7 @@ class PrettyImageView @JvmOverloads constructor(context: Context, attributeSet: 
 
     private fun drawCircleDot(canvas: Canvas?) {
         canvas?.run {
-            drawCircle((mRadius + mRadius * (Math.sqrt(2.0) / 2.0f)).toFloat(), (mRadius - mRadius * (Math.sqrt(2.0) / 2.0f)).toFloat(), mCircleDotRadius, mCircleDotPaint)
+            drawCircle((mRadius + mRadius * (sqrt(2.0) / 2.0f)).toFloat(), (mRadius - mRadius * (sqrt(2.0) / 2.0f)).toFloat(), mCircleDotRadius, mCircleDotPaint)
         }
     }
 
@@ -287,11 +290,11 @@ class PrettyImageView @JvmOverloads constructor(context: Context, attributeSet: 
         return BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).apply {
             var scale = 1.0f
             if (mShapeType == ShapeType.SHAPE_CIRCLE) {
-                scale = (mWidth * 1.0f / Math.min(bitmap.width, bitmap.height))
+                scale = (mWidth * 1.0f / min(bitmap.width, bitmap.height))
             } else if (mShapeType == ShapeType.SHAPE_ROUND) {
                 // 如果图片的宽或者高与view的宽高不匹配，计算出需要缩放的比例；缩放后的图片的宽高，一定要大于我们view的宽高；所以我们这里取大值；
                 if (!(width == bitmap.width && width == bitmap.height)) {
-                    scale = Math.max(width * 1.0f / bitmap.width, height * 1.0f / bitmap.height)
+                    scale = max(width * 1.0f / bitmap.width, height * 1.0f / bitmap.height)
                 }
             }
             // shader的变换矩阵，我们这里主要用于放大或者缩小
