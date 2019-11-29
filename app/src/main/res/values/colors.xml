@@ -37,4 +37,16 @@
     <color name="color_00c">#00ccc0</color>
     <color name="color_7b">#7b8393</color>
     <color name="color_85">#856211</color>
+
+    <array name="arc_colors_default">
+        <item>#1a2a6c</item>
+        <item>#b21f1f</item>
+        <item>#fdbb2d</item>
+    </array>
+
+    <array name="arc_colors_custom">
+        <item>#DE7867</item>
+        <item>#4B9EF7</item>
+        <item>#262626</item>
+    </array>
 </resources>

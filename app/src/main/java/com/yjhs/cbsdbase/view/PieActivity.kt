@@ -7,6 +7,8 @@ import com.yjhs.cbsdbase.view.model.PieData
 import kotlinx.android.synthetic.main.activity_pie.*
 
 
+
+
 /**
  * author: Administrator
  * date: 2019-11-28
@@ -41,4 +43,5 @@ class PieActivity : BaseActivity() {
     override fun init(savedInstanceState: Bundle?) {
 
     }
+
 }

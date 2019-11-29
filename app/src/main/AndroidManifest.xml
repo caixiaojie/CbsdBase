@@ -36,6 +36,8 @@
         <activity android:name=".activity.PubActivity"/>
         <activity android:name=".activity.FileActivity" />
         <activity android:name=".view.PieActivity" />
+        <activity android:name=".view.ArcSeekBarActivity" />
+        <activity android:name=".view.BubbleActivity" />
     </application>
 
 </manifest>
