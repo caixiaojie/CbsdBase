@@ -1,6 +1,7 @@
 package com.yjhs.cbsdbase.view
 
 import android.os.Bundle
+import android.view.animation.*
 import com.yjhs.cbsd.base.BaseActivity
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.view.model.PieData
@@ -41,6 +42,41 @@ class PieActivity : BaseActivity() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        val trans = TranslateAnimation(0f,50f,0f,50f)
+        val alpha = AlphaAnimation(1f,0.5f)
+        alpha.repeatCount = Animation.INFINITE
+        val scale = ScaleAnimation(0f,0.5f,0f,0.5f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f)
+        val rotate = RotateAnimation(0f,360f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f)
+        rotate.repeatCount = Animation.INFINITE
+
+        rotate.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+            }
+
+            override fun onAnimationStart(p0: Animation?) {
+            }
+
+        })
+
+
+        val animationSet = AnimationSet(true)
+//        animationSet.addAnimation(trans)
+        animationSet.addAnimation(alpha)
+//        animationSet.addAnimation(scale)
+        animationSet.addAnimation(rotate)
+
+
+        animationSet.interpolator = LinearInterpolator()
+//        animationSet.repeatCount = Animation.INFINITE
+//        animationSet.repeatMode = Animation.RESTART
+        animationSet.duration = 2000
+
+        pretty_image_round.setOnClickListener {
+            pretty_image_round.startAnimation(animationSet)
+        }
 
     }
 

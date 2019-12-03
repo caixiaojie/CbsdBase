@@ -14,6 +14,7 @@
                 android:layout_height="500dp"/>
 
         <com.yjhs.cbsdbase.view.widget.PrettyImageView
+                android:layout_margin="@dimen/dist_16"
                 android:id="@+id/pretty_image_round"
                 app:border_color="@color/color_main"
                 app:border_width="0dp"
