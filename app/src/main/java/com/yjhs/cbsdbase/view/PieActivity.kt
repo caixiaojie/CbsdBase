@@ -1,5 +1,7 @@
 package com.yjhs.cbsdbase.view
 
+import android.animation.Animator
+import android.animation.AnimatorInflater
 import android.os.Bundle
 import android.view.animation.*
 import com.yjhs.cbsd.base.BaseActivity
@@ -32,6 +34,42 @@ class PieActivity : BaseActivity() {
         datas.add(pieData3)
         datas.add(pieData4)
         datas.add(pieData5)
+
+        //变换
+        datas.map {
+
+        }
+
+//        datas.map(PieData :: name)
+
+        //过滤
+        datas.filter {
+            it.name == "sloop"
+        }.map {
+
+        }
+
+
+//        datas.all {
+//
+//        }
+//
+//        datas.any {
+//
+//        }
+//
+//        datas.count {
+//
+//        }
+//
+//        datas.find {
+//
+//        }
+
+//        datas.groupBy {
+//            it.color
+//        }
+
     }
 
     override fun initView() {
@@ -69,6 +107,8 @@ class PieActivity : BaseActivity() {
         animationSet.addAnimation(rotate)
 
 
+
+
         animationSet.interpolator = LinearInterpolator()
 //        animationSet.repeatCount = Animation.INFINITE
 //        animationSet.repeatMode = Animation.RESTART
@@ -77,6 +117,9 @@ class PieActivity : BaseActivity() {
         pretty_image_round.setOnClickListener {
             pretty_image_round.startAnimation(animationSet)
         }
+
+//        AnimationUtils.loadAnimation()
+//        AnimatorInflater.loadAnimator()
 
     }
 
