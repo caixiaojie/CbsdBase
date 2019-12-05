@@ -140,7 +140,9 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
 
     override fun onDestroy() {
         super.onDestroy()
-        pop?.dismiss()
+        if (pop != null){
+            pop.dismiss()
+        }
     }
 
     override fun onStart() {

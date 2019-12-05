@@ -65,7 +65,7 @@ class PieView @JvmOverloads constructor(context: Context,attrs: AttributeSet? = 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        if (null == mData)
+        if (null == mData || mData.isEmpty())
             return
         var currentStartAngle = mStartAngle                      // 当前起始角度
         canvas?.translate((mWidth / 2).toFloat(), (mHeight / 2).toFloat())                  // 将画布坐标原点移动到中心位置
