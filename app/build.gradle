@@ -46,4 +46,5 @@ dependencies {
     implementation project(path: ':banner')
     implementation project(path: ':WebViewLib')
     implementation project(path: ':mupdf')
+    implementation project(path: ':appupdateX')
 }

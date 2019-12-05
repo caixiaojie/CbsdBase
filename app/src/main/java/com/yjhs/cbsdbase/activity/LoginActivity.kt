@@ -8,7 +8,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.yjhs.cbsd.base.BaseVMActivity
 import com.yjhs.cbsd.utils.Preference
-import com.yjhs.cbsd.utils.Tools
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.model.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
@@ -16,6 +15,7 @@ import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 import android.widget.Toast
 import com.yjhs.cbsd.http.ApiException
+import com.yjhs.cbsd.utils.Tools
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -55,9 +55,9 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
                 showLoading("登录中")
                 mViewModel.login(Tools.safeString(et_account),Tools.safeString(et_pwd))
             }
-            R.id.txt_forgot_pwd ->{
-                startActivity<SimpleActivity>()
-            }
+//            R.id.txt_forgot_pwd ->{
+//                startActivity<SimpleActivity>()
+//            }
         }
     }
 

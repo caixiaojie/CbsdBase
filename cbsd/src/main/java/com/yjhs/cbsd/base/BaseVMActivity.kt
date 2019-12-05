@@ -29,6 +29,7 @@ abstract class BaseVMActivity : BaseActivity() {
     }
 
     open fun toastMessage(throwable: ApiException) {
+
         if (!TextUtils.isEmpty(throwable.message)) {
             toastMsg(throwable.toString())
         }
