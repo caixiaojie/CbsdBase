@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
@@ -93,6 +94,13 @@ class PubFragment : BaseVMFragment(),IWebCallback {
     }
 
     override fun initView() {
+        ImmersionBar.with(this)
+            .flymeOSStatusBarFontColor(android.R.color.black)  //修改flyme OS状态栏字体颜色
+            .statusBarDarkFont(true)
+            .transparentStatusBar()
+            .titleBar(toolbar)
+            .keyboardEnable(false).init()
+
         img_back.visibility = View.GONE
         title_right.visibility = View.VISIBLE
         title_right.text = "下一步"
@@ -118,6 +126,7 @@ class PubFragment : BaseVMFragment(),IWebCallback {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+
         title_right.setOnClickListener {
             web_view.evaluateJavascript("javascript:getArticleInfo()",null)
         }

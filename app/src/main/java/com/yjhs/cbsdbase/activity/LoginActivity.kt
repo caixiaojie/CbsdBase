@@ -1,10 +1,13 @@
 package com.yjhs.cbsdbase.activity
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.yjhs.cbsd.base.BaseVMActivity
 import com.yjhs.cbsd.utils.Preference
@@ -14,8 +17,10 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 import android.widget.Toast
+import com.gyf.immersionbar.ImmersionBar
 import com.yjhs.cbsd.http.ApiException
 import com.yjhs.cbsd.utils.Tools
+import kotlinx.android.synthetic.main.common_preview_title.*
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -32,6 +37,7 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         private const val REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_GALLERY_Dracula = 101
     }
     override fun initData() {
+
     }
 
     override fun initView() {
@@ -46,12 +52,16 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         if (!session_id.isNullOrEmpty()){
             startActivity<MainActivity>()
             finish()
+        }else {
+            openSoftKey(et_account)
         }
+
     }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.txt_login ->{
+                hideSoftKey()
                 showLoading("登录中")
                 mViewModel.login(Tools.safeString(et_account),Tools.safeString(et_pwd))
             }
@@ -72,6 +82,13 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        ImmersionBar.with(this)
+            .flymeOSStatusBarFontColor(android.R.color.black)  //修改flyme OS状态栏字体颜色
+            .statusBarDarkFont(true)
+            .transparentStatusBar()
+            .titleBar(toolbar)
+            .keyboardEnable(false).init()
+
         mViewModel.data.observe(this, Observer {
             hideLoading()
             session_id = it.session_id
@@ -83,10 +100,10 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
                 finish()
             }
         })
-
         txt_login.setOnClickListener(this)
         txt_forgot_pwd.setOnClickListener(this)
     }
+
 
     override fun onError(throwable: ApiException) {
         hideLoading()

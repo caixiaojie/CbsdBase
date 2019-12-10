@@ -6,12 +6,14 @@ import com.azhon.appupdate.config.UpdateConfiguration
 import com.azhon.appupdate.listener.OnButtonClickListener
 import com.azhon.appupdate.listener.OnDownloadListener
 import com.azhon.appupdate.manager.DownloadManager
+import com.gyf.immersionbar.ImmersionBar
 import com.yjhs.cbsd.base.BaseFragment
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.activity.FileActivity
 import com.yjhs.cbsdbase.view.ArcSeekBarActivity
 import com.yjhs.cbsdbase.view.BubbleActivity
 import com.yjhs.cbsdbase.view.PieActivity
+import kotlinx.android.synthetic.main.common_preview_title.*
 import kotlinx.android.synthetic.main.fragment_me.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.io.File
@@ -56,6 +58,7 @@ class MeFragment : BaseFragment(), OnButtonClickListener, OnDownloadListener {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+
         ll_account_manage.setOnClickListener {
             startActivity<FileActivity>()
         }

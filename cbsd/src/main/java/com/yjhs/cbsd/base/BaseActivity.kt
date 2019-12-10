@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportActivity
 import pub.devrel.easypermissions.EasyPermissions
 import android.R
+import android.content.Context
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import org.jetbrains.anko.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 
@@ -173,6 +177,27 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
                 .build()
                 .show()
         }
+    }
+
+    //自动弹出软键盘
+    open fun openSoftKey(editText: EditText) {
+        editText.isFocusable = true
+        editText.isFocusableInTouchMode = true
+        editText.requestFocus()
+//        val inputManager = /*editText.context.*/getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        inputManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+//        inputManager.showSoftInput(editText, 0)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+    }
+
+    open fun hideSoftKey() {
+        // 当按了搜索之后关闭软键盘
+//        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+//            currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS
+//        )
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
 }

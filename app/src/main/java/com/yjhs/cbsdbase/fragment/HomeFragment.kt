@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.android.material.appbar.AppBarLayout
+import com.gyf.immersionbar.ImmersionBar
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -73,6 +74,7 @@ class HomeFragment : BaseVMFragment() , BaseQuickAdapter.OnItemClickListener, On
     }
 
     override fun init(savedInstanceState: Bundle?) {
+
         mViewModel.infoBean.observe(this, Observer {
             multiple_status_view.showContent()
             smart_refresh_layout.finishRefresh()

@@ -2,12 +2,14 @@ package com.yjhs.cbsdbase.activity
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.gyf.immersionbar.ImmersionBar
 import com.yjhs.cbsd.base.BaseActivity
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.fragment.HomeFragment
 import com.yjhs.cbsdbase.fragment.MeFragment
 import com.yjhs.cbsdbase.fragment.PubFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportFragment
 
 class MainActivity : BaseActivity() {
