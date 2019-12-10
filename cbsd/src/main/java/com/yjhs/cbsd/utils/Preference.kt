@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.yjhs.cbsd.App
+import com.yjhs.cbsd.Constant
 import java.io.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -18,11 +19,11 @@ class Preference<T>(val name: String, private val default: T) : ReadWritePropert
         const val strUserType = "strUserType"
     }
 
-    private val sp_name = "APP_Config"
+
 
     private val prefs: SharedPreferences by lazy {
 //        PreferenceManager.getDefaultSharedPreferences(App.CONTEXT)
-        App.CONTEXT.applicationContext.getSharedPreferences(sp_name, Context.MODE_PRIVATE)
+        App.CONTEXT.applicationContext.getSharedPreferences(Constant.sp_name, Context.MODE_PRIVATE)
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {

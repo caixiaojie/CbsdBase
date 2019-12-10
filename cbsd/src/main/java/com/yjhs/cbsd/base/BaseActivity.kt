@@ -2,7 +2,6 @@ package com.yjhs.cbsd.base
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
@@ -14,11 +13,21 @@ import com.yjhs.cbsd.widget.MultipleStatusView
 import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportActivity
 import pub.devrel.easypermissions.EasyPermissions
-import android.R
 import android.content.Context
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
+import android.content.IntentFilter
+import android.graphics.PixelFormat
+import android.view.*
 import android.widget.EditText
+import com.yjhs.cbsd.Constant
+import com.yjhs.cbsd.R
+import com.yjhs.cbsd.event.NetworkChangeEvent
+import com.yjhs.cbsd.receiver.NetworkChangeReceiver
+import com.yjhs.cbsd.utils.CommonUtil
+import com.yjhs.cbsd.utils.KeyBoardUtil
+import com.yjhs.cbsd.utils.Preference
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 
@@ -35,14 +44,33 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
 
     private var mLoadingDialog: BusyView? = null
     private var mMultipleStatusView: MultipleStatusView? = null
+    /**
+     * 缓存上一次的网络状态
+     */
+    protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)
+
+    /**
+     * 网络状态变化的广播
+     */
+    protected var mNetworkChangeReceiver: NetworkChangeReceiver? = null
+    /**
+     * 提示View
+     */
+    private lateinit var mTipView: View
+    private lateinit var mWindowManager: WindowManager
+    private lateinit var mLayoutParams: WindowManager.LayoutParams
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
+        if (useEventBus()) {
+            EventBus.getDefault().register(this)
+        }
         initStatusBar()
         init(savedInstanceState)
         initData()
+        initTipView()
         initView()
         start()
         initListener()
@@ -198,6 +226,109 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
 //        )
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (ev?.action == MotionEvent.ACTION_UP) {
+            val v = currentFocus
+            // 如果不是落在EditText区域，则需要关闭输入法
+            if (KeyBoardUtil.isHideKeyboard(v, ev)) {
+                KeyBoardUtil.hideKeyBoard(this, v)
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    /**
+     * 初始化 TipView
+     */
+    private fun initTipView() {
+        mTipView = layoutInflater.inflate(R.layout.layout_network_tip, null)
+        mWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        mLayoutParams = WindowManager.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_APPLICATION,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            PixelFormat.TRANSLUCENT)
+        mLayoutParams.gravity = Gravity.TOP
+        mLayoutParams.x = 0
+        mLayoutParams.y = 0
+        mLayoutParams.windowAnimations = R.style.anim_float_view // add animations
+    }
+
+    override fun onResume() {
+        // 动态注册网络变化广播
+        val filter = IntentFilter()
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+        mNetworkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(mNetworkChangeReceiver, filter)
+        super.onResume()
+    }
+
+    /**
+     * 是否使用 EventBus
+     */
+    open fun useEventBus(): Boolean = true
+
+    /**
+     * 是否需要显示 TipView
+     */
+    open fun enableNetworkTip(): Boolean = true
+
+    /**
+     * 无网状态—>有网状态 的自动重连操作，子类可重写该方法
+     */
+    open fun doReConnected() {
+        start()
+    }
+
+    /**
+     * Network Change
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onNetworkChangeEvent(event: NetworkChangeEvent) {
+        hasNetwork = event.isConnected
+        checkNetwork(event.isConnected)
+    }
+
+    private fun checkNetwork(isConnected: Boolean) {
+        if (enableNetworkTip()) {
+            if (isConnected) {
+                doReConnected()
+                if (mTipView != null && mTipView.parent != null) {
+                    mWindowManager.removeView(mTipView)
+                }
+            } else {
+                if (mTipView.parent == null) {
+                    mWindowManager.addView(mTipView, mLayoutParams)
+                }
+            }
+        }
+    }
+
+
+    override fun onPause() {
+        if (mNetworkChangeReceiver != null) {
+            unregisterReceiver(mNetworkChangeReceiver)
+            mNetworkChangeReceiver = null
+        }
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (useEventBus()) {
+            EventBus.getDefault().unregister(this)
+        }
+        CommonUtil.fixInputMethodManagerLeak(this)
+    }
+
+    override fun finish() {
+        super.finish()
+        if (mTipView != null && mTipView.parent != null) {
+            mWindowManager.removeView(mTipView)
+        }
     }
 
 }
