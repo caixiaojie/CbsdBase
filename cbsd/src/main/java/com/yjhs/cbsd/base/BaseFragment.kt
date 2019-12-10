@@ -8,10 +8,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.gyf.immersionbar.ImmersionBar
+import com.yjhs.cbsd.Constant
 import com.yjhs.cbsd.R
+import com.yjhs.cbsd.event.NetworkChangeEvent
+import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsd.widget.MultipleStatusView
 import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportFragment
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.support.v4.toast
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -29,6 +35,10 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
     //是否首次加载
     private var isFirstLoad = true
     open var mMultipleStatusView: MultipleStatusView? = null
+    /**
+     * 缓存上一次的网络状态
+     */
+    protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)
 
 
     override fun onCreateView(
@@ -46,6 +56,9 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
+        if (useEventBus()) {
+            EventBus.getDefault().register(this)
+        }
         isFirstLoad = false
         init(savedInstanceState)
         initStatusBar()
@@ -165,6 +178,32 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
                 .setNegativeButton("不行")
                 .build()
                 .show()
+        }
+    }
+
+    /**
+     * 是否使用 EventBus
+     */
+    open fun useEventBus(): Boolean = true
+
+    /**
+     * 无网状态—>有网状态 的自动重连操作，子类可重写该方法
+     */
+    open fun doReConnected() {
+        lazyLoad()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onNetworkChangeEvent(event: NetworkChangeEvent) {
+        if (event.isConnected) {
+            doReConnected()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (useEventBus()) {
+            EventBus.getDefault().unregister(this)
         }
     }
 }
