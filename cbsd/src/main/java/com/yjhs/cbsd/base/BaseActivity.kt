@@ -25,6 +25,7 @@ import com.yjhs.cbsd.receiver.NetworkChangeReceiver
 import com.yjhs.cbsd.utils.CommonUtil
 import com.yjhs.cbsd.utils.KeyBoardUtil
 import com.yjhs.cbsd.utils.Preference
+import com.yjhs.cbsd.widget.toast.XToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -155,7 +156,8 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
     }
 
     fun toastMsg(str: String) {
-        toast(str)
+//        toast(str)
+        XToast.warning(this,str).show()
     }
 
     private val mRetryClickListener: View.OnClickListener = View.OnClickListener {
