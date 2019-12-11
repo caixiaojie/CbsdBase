@@ -87,7 +87,6 @@
         <LinearLayout
                 android:visibility="visible"
                 android:layout_gravity="center"
-                android:background="@mipmap/btn_login"
                 android:id="@+id/ll_login"
                 android:layout_marginTop="50dp"
                 android:layout_width="287dp"
@@ -100,6 +99,7 @@
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:gravity="center"
+                    android:background="@color/mainColor"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:text="登录"

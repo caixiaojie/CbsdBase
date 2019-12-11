@@ -8,8 +8,11 @@ import com.azhon.appupdate.listener.OnDownloadListener
 import com.azhon.appupdate.manager.DownloadManager
 import com.gyf.immersionbar.ImmersionBar
 import com.yjhs.cbsd.base.BaseFragment
+import com.yjhs.cbsd.core.ext.startKtxActivity
+import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.activity.FileActivity
+import com.yjhs.cbsdbase.activity.LoginActivityCopy
 import com.yjhs.cbsdbase.view.ArcSeekBarActivity
 import com.yjhs.cbsdbase.view.BubbleActivity
 import com.yjhs.cbsdbase.view.PieActivity
@@ -47,6 +50,8 @@ class MeFragment : BaseFragment(), OnButtonClickListener, OnDownloadListener {
     private val url =
         "https://f29addac654be01c67d351d1b4282d53.dd.cdntips.com/imtt.dd.qq.com/16891/DC501F04BBAA458C9DC33008EFED5E7F.apk?mkey=5d6d132d73c4febb&f=0c2f&fsname=com.estrongs.android.pop_4.2.0.2.1_10027.apk&csr=1bbd&cip=115.196.216.78&proto=https"
 
+    private var sessionId by Preference(Preference.session_id, "")
+
     override fun initView() {
     }
 
@@ -73,6 +78,10 @@ class MeFragment : BaseFragment(), OnButtonClickListener, OnDownloadListener {
         }
         ll_setting.setOnClickListener {
             startUpdate()
+        }
+        ll_exit.setOnClickListener {
+            sessionId = ""
+            startKtxActivity<LoginActivityCopy>()
         }
     }
 

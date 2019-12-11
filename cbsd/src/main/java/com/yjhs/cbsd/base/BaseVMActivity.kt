@@ -29,12 +29,11 @@ abstract class BaseVMActivity : BaseActivity() {
     }
 
     open fun toastMessage(throwable: ApiException) {
-
         if (!TextUtils.isEmpty(throwable.message)) {
             toastMsg(throwable.toString())
         }
     }
 
-    open fun onError(throwable: ApiException) {
-    }
+    open fun onError(throwable: ApiException) {}
+
 }

@@ -65,9 +65,6 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
                 showLoading("登录中")
                 mViewModel.login(Tools.safeString(et_account),Tools.safeString(et_pwd))
             }
-//            R.id.txt_forgot_pwd ->{
-//                startActivity<SimpleActivity>()
-//            }
         }
     }
 

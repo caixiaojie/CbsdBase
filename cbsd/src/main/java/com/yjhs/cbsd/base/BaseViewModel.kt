@@ -68,7 +68,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                     val currentActivity = ActivityUtil.getCurrentActivity()
                     if (currentActivity != null) {
                         KtxManager.finishAllActivity()
-                        val intent = Intent(currentActivity, Class.forName("com.yjhs.cbsdbase.activity.LoginActivity"))
+                        val intent = Intent(currentActivity, Class.forName("com.yjhs.cbsdbase.activity.LoginActivityCopy"))
                         currentActivity.startActivity(intent)
                     }
                 }else{
@@ -91,6 +91,12 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     ) {
         runOnIo(request, success, {})
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
+    }
+
 }
 
 
