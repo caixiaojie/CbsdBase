@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.gyf.immersionbar.ImmersionBar
+import com.orhanobut.logger.Logger
 import com.yjhs.cbsd.Constant
 import com.yjhs.cbsd.R
+import com.yjhs.cbsd.event.KeyboardShowEvent
 import com.yjhs.cbsd.event.NetworkChangeEvent
 import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsd.widget.MultipleStatusView
+import com.yjhs.cbsd.widget.toast.XToast
 import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportFragment
 import org.greenrobot.eventbus.EventBus
@@ -81,9 +84,15 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
         ImmersionBar.with(this)
             .flymeOSStatusBarFontColor(R.color.black)  //修改flyme OS状态栏字体颜色
             .statusBarDarkFont(true)
-            .transparentStatusBar()
+//                .transparentStatusBar()
             .titleBar(toolbar)
-            .keyboardEnable(true).init()
+            .keyboardEnable(true)
+//            .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)  //单独指定软键盘模式
+            .setOnKeyboardListener { isPopup, keyboardHeight ->
+                Logger.d("isPopup=$isPopup,keyboardHeight=$keyboardHeight")
+                EventBus.getDefault().post(KeyboardShowEvent(isPopup))
+            }
+            .init()
     }
     open fun setToolBarTitle(toolBar: androidx.appcompat.widget.Toolbar, title: String?){
         val tvTitle = toolBar.findViewById<TextView>(R.id.title)
@@ -116,7 +125,8 @@ abstract class BaseFragment : SupportFragment(), IBaseView, EasyPermissions.Perm
     protected abstract fun init(savedInstanceState: Bundle?)
 
     fun toastMsg(str: String) {
-        toast(str)
+//        toast(str)
+        XToast.warning(_mActivity,str).show()
     }
 
 

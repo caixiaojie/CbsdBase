@@ -20,6 +20,7 @@ import com.ycbjie.webviewlib.InterWebListener
 import com.ycbjie.webviewlib.VideoWebListener
 import com.ycbjie.webviewlib.X5WebUtils
 import com.yjhs.cbsd.base.BaseVMFragment
+import com.yjhs.cbsd.event.KeyboardShowEvent
 import com.yjhs.cbsd.utils.FormFile
 import com.yjhs.cbsdbase.ApiService
 import com.yjhs.cbsdbase.R
@@ -33,6 +34,8 @@ import com.yjhs.cbsdbase.common.VideoHandle
 import com.yjhs.cbsdbase.model.FileUploadModel
 import kotlinx.android.synthetic.main.common_preview_title.*
 import kotlinx.android.synthetic.main.fragment_pub.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.lang.ref.WeakReference
 import kotlin.collections.ArrayList
 
@@ -94,12 +97,14 @@ class PubFragment : BaseVMFragment(),IWebCallback {
     }
 
     override fun initView() {
+
         ImmersionBar.with(this)
-            .flymeOSStatusBarFontColor(android.R.color.black)  //修改flyme OS状态栏字体颜色
+            .flymeOSStatusBarFontColor(R.color.black)  //修改flyme OS状态栏字体颜色
             .statusBarDarkFont(true)
-            .transparentStatusBar()
             .titleBar(toolbar)
-            .keyboardEnable(false).init()
+            .keyboardEnable(false)
+            .init()
+
 
         img_back.visibility = View.GONE
         title_right.visibility = View.VISIBLE
@@ -418,5 +423,7 @@ class PubFragment : BaseVMFragment(),IWebCallback {
             toastMsg("json解析出错")
         }
     }
+
+
 
 }

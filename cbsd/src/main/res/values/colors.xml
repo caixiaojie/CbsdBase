@@ -131,4 +131,20 @@
     <color name="xui_config_color_edittext_stroke">@color/xui_config_color_control_normal</color>
     <!--不可输入的填充颜色-->
     <color name="xui_config_color_edittext_disable">#EDF2F7</color>
+
+
+    <!--*********************************************
+    *              Config Color                     *
+    **********************************************-->
+    <color name="xui_config_color_main_theme">@color/xui_config_color_light_blue</color>
+    <color name="xui_config_color_titlebar">@color/xui_config_color_main_theme</color>
+
+    <color name="xui_btn_blue_normal_color">#3E99D2</color>
+    <color name="xui_btn_blue_select_color">#2488C6</color>
+    <color name="xui_btn_green_normal_color">#2BCFB8</color>
+    <color name="xui_btn_green_select_color">#05BCA2</color>
+    <color name="xui_btn_gray_normal_color">#9DA7B0</color>
+    <color name="xui_btn_gray_select_color">#87919A</color>
+    <color name="xui_btn_disable_color">#D6DDE1</color>
+
 </resources>

@@ -1,9 +1,13 @@
 package com.yjhs.cbsdbase.activity
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gyf.immersionbar.ImmersionBar
 import com.yjhs.cbsd.base.BaseActivity
+import com.yjhs.cbsd.event.KeyboardShowEvent
+import com.yjhs.cbsd.event.NetworkChangeEvent
+import com.yjhs.cbsd.utils.SoftHideKeyBoardUtil
 import com.yjhs.cbsdbase.R
 import com.yjhs.cbsdbase.fragment.HomeFragment
 import com.yjhs.cbsdbase.fragment.MeFragment
@@ -11,6 +15,8 @@ import com.yjhs.cbsdbase.fragment.PubFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.common_preview_title.*
 import me.yokeyword.fragmentation.SupportFragment
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : BaseActivity() {
     private val mFragments = arrayOfNulls<SupportFragment>(3)
@@ -34,7 +40,10 @@ class MainActivity : BaseActivity() {
 
     }
 
+    override fun useEventBus(): Boolean  = true
+
     override fun initView() {
+
     }
 
     override fun start() {
@@ -67,6 +76,14 @@ class MainActivity : BaseActivity() {
             }
         }
         false
+    }
+
+    /**
+     * Network Change
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onKeyBoardChangeEvent(event: KeyboardShowEvent) {
+        nav_view.visibility = if(event.isPop) View.GONE else View.VISIBLE
     }
 
 

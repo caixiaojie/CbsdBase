@@ -18,13 +18,17 @@ import android.content.IntentFilter
 import android.graphics.PixelFormat
 import android.view.*
 import android.widget.EditText
+import com.gyf.immersionbar.OnKeyboardListener
+import com.orhanobut.logger.Logger
 import com.yjhs.cbsd.Constant
 import com.yjhs.cbsd.R
+import com.yjhs.cbsd.event.KeyboardShowEvent
 import com.yjhs.cbsd.event.NetworkChangeEvent
 import com.yjhs.cbsd.receiver.NetworkChangeReceiver
 import com.yjhs.cbsd.utils.CommonUtil
 import com.yjhs.cbsd.utils.KeyBoardUtil
 import com.yjhs.cbsd.utils.Preference
+import com.yjhs.cbsd.utils.SoftHideKeyBoardUtil
 import com.yjhs.cbsd.widget.toast.XToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -116,9 +120,17 @@ abstract class BaseActivity : SupportActivity(), IBaseView, EasyPermissions.Perm
         ImmersionBar.with(this)
                 .flymeOSStatusBarFontColor(R.color.black)  //修改flyme OS状态栏字体颜色
                 .statusBarDarkFont(true)
-                .transparentStatusBar()
+//                .transparentStatusBar()
                 .titleBar(toolbar)
-                .keyboardEnable(true).init()
+                .keyboardEnable(true)
+//            .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)  //单独指定软键盘模式
+            .setOnKeyboardListener { isPopup, keyboardHeight ->
+                Logger.d("isPopup=$isPopup,keyboardHeight=$keyboardHeight")
+                EventBus.getDefault().post(KeyboardShowEvent(isPopup))
+            }
+            .init()
+
+        SoftHideKeyBoardUtil.assistActivity(this)
     }
 
     open fun setToolBarTitle(toolBar: androidx.appcompat.widget.Toolbar, title: String?){
