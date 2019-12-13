@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <include layout="@layout/common_preview_title"/>
+    <com.yjhs.cbsd.widget.spinner.DropDownMenu
+            android:id="@+id/mDropDownMenu"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:ddm_dividerColor="@color/gray_f8"
+            app:ddm_menuTextUnselectedColor="@color/color_txt_gray"
+            app:ddm_menuTextSize="@dimen/sp_14"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+</LinearLayout>

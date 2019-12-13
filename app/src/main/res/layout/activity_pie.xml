@@ -71,6 +71,74 @@
                 app:arc_width="40dp"
                 android:layout_width="@dimen/dist_280"
                 android:layout_height="@dimen/dist_280"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <com.yjhs.cbsd.widget.shadow.ShadowLinearLayout
+                    android:layout_margin="@dimen/dist_20"
+                    android:layout_width="@dimen/dist_300"
+                    android:layout_height="@dimen/dist_50"/>
+
+            <com.yjhs.cbsd.widget.shadow.ShadowButton
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:text="默认样式" />
+
+            <com.yjhs.cbsd.widget.shadow.ShadowTextView
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="ShadowTextView"
+                    android:textColor="@color/xui_config_color_white"
+                    app:sd_bgColor="?attr/colorAccent"
+                    app:sd_offsetX="5dp"
+                    app:sd_offsetY="5dp"
+                    app:sd_shadowRadius="5dp"
+                    app:sd_shapeRadius="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <com.yjhs.cbsd.widget.shadow.ShadowButton
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:sd_shadowRadius="10dp"
+                    app:sd_shapeType="round" />
+
+
+            <com.yjhs.cbsd.widget.shadow.ShadowTextView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="渐变色"
+                    android:textColor="@color/xui_config_color_white"
+                    app:sd_bgColor="?attr/colorAccent"
+                    app:sd_offsetX="5dp"
+                    app:sd_offsetY="5dp"
+                    app:sd_secondBgColor="@color/color_txt_green"
+                    app:sd_shadowRadius="5dp"
+                    app:sd_shapeRadius="5dp"
+                    app:sd_shapeType="round" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

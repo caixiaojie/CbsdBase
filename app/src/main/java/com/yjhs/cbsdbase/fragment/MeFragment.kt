@@ -11,6 +11,7 @@ import com.yjhs.cbsd.base.BaseFragment
 import com.yjhs.cbsd.core.ext.startKtxActivity
 import com.yjhs.cbsd.utils.Preference
 import com.yjhs.cbsdbase.R
+import com.yjhs.cbsdbase.activity.DropDownMenuActivity
 import com.yjhs.cbsdbase.activity.FileActivity
 import com.yjhs.cbsdbase.activity.LoginActivityCopy
 import com.yjhs.cbsdbase.view.ArcSeekBarActivity
@@ -78,6 +79,9 @@ class MeFragment : BaseFragment(), OnButtonClickListener, OnDownloadListener {
         }
         ll_setting.setOnClickListener {
             startUpdate()
+        }
+        ll_drop_menu.setOnClickListener {
+            startActivity<DropDownMenuActivity>()
         }
         ll_exit.setOnClickListener {
             sessionId = ""
